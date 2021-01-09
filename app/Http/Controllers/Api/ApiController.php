@@ -38,8 +38,10 @@ class ApiController extends Controller
             $image = Auth::user()->image;
             $department = Auth::user()->department;
             $semester = Auth::user()->semester;
+            $profession = Auth::user()->profession;
+            $details = Auth::user()->details;
 
-            $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester);
+            $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester, 'profession' => $profession, 'details' => $details);
             return response()->json(['success' =>true,'data'=>$data]);
         }
         else{
@@ -402,6 +404,20 @@ class ApiController extends Controller
         return response()->json([
             'success'=> true,
             'data'=> $data->amount,
+        ]);
+    }
+
+    public function subscribedContests(Request $request){
+        $data = DB::table('contest_subscriptions')
+                    ->join('contests','contests.id','=','contest_subscriptions.contest_id')
+                    ->join('games','games.id','=','contests.game_id')
+                    ->select('contest_subscriptions.*','contests.title as contest_name','games.game_name')
+                    ->where('contest_subscriptions.user_id',$request->user_id)
+                    ->get();
+
+        return response()->json([
+            'success'=> true,
+            'data'=> $data,
         ]);
     }
 }
