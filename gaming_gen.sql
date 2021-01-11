@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2021 at 05:26 PM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Generation Time: Jan 11, 2021 at 09:28 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.4.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -76,6 +76,22 @@ CREATE TABLE `contests` (
 
 INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `created_at`, `updated_at`) VALUES
 (1, 1, '234234', 'qweqwe', '2021-01-08', '12:01 AM', 1, '100', '12312', '1231', '123123', '2', '2021-01-08 12:13:50', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contest_ratings`
+--
+
+CREATE TABLE `contest_ratings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `contest_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `star` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comments` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -199,7 +215,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2020_12_26_143129_create_package_requests_table', 7),
 (23, '2020_12_21_150845_create_contests_table', 8),
 (24, '2020_12_21_190207_create_contest_subscriptions_table', 9),
-(26, '2020_12_26_122245_create_packages_table', 10);
+(26, '2020_12_26_122245_create_packages_table', 10),
+(28, '2021_01_11_064325_create_contest_ratings_table', 11);
 
 -- --------------------------------------------------------
 
@@ -353,6 +370,12 @@ ALTER TABLE `contests`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `contest_ratings`
+--
+ALTER TABLE `contest_ratings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `contest_subscriptions`
 --
 ALTER TABLE `contest_subscriptions`
@@ -443,6 +466,12 @@ ALTER TABLE `contests`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `contest_ratings`
+--
+ALTER TABLE `contest_ratings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `contest_subscriptions`
 --
 ALTER TABLE `contest_subscriptions`
@@ -470,7 +499,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `packages`
