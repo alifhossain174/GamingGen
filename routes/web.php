@@ -67,4 +67,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/delete/package/request/{id}','PackageController@deletePackageRequest');
     Route::get('/deny/package/request/{id}','PackageController@denyPackageRequest');
 
+    // contest rating
+    Route::get('/contest/rating/page','ContestRatingController@contestRatingPage');
+    Route::get('/delete/contest/rating/{id}','ContestRatingController@deleteContestRating');
+
 });

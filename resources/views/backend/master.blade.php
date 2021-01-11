@@ -111,6 +111,7 @@
                             </li>
 						</ul>
                     </li>
+                    <li><a href="{{url('/contest/rating/page')}}"> <i class="fas fa-poll-h"></i> Contest Survey </a></li>
 
 				</ul>
 			</div>

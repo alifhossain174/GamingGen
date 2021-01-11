@@ -35,4 +35,7 @@ Route::group(['namespace'=>'Api'],function(){
 
     Route::post('user/account','ApiController@userAmount');
     Route::post('subscribed/contest/list','ApiController@subscribedContests');
+
+    //contest rating api
+    Route::post('submit/contest/rating','ApiController@submitContestRating');
 });

@@ -420,4 +420,8 @@ class ApiController extends Controller
             'data'=> $data,
         ]);
     }
+
+    public function submitContestRating(Request $request){
+
+    }
 }
