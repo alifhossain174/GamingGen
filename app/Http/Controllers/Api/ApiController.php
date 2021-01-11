@@ -11,6 +11,7 @@ use App\Slider;
 use App\Game;
 use App\WithDraw;
 use App\AddMoney;
+use App\Payment;
 use App\Package;
 use App\PackageRequest;
 use App\Contest;
@@ -412,7 +413,7 @@ class ApiController extends Controller
         $data = DB::table('contest_subscriptions')
                     ->join('contests','contests.id','=','contest_subscriptions.contest_id')
                     ->join('games','games.id','=','contests.game_id')
-                    ->select('contest_subscriptions.*','contests.title as contest_name','games.game_name')
+                    ->select('contest_subscriptions.*','contests.title as contest_name','games.game_name','contests.game_code','contests.first','contests.second','contests.third')
                     ->where('contest_subscriptions.user_id',$request->user_id)
                     ->get();
 
@@ -439,8 +440,9 @@ class ApiController extends Controller
     public function getContestRatingList(Request $request){
         $data = DB::table('contest_ratings')
                         ->join('contests','contests.id','=','contest_ratings.contest_id')
+                        ->join('games','games.id','=','contests.game_id')
                         ->join('users','users.id','=','contest_ratings.user_id')
-                        ->select('contest_ratings.*','contests.title','users.name as user_name')
+                        ->select('contest_ratings.*','contests.title','users.name as user_name','games.game_name','games.logo as game_logo')
                         ->where('contest_ratings.user_id',$request->user_id)
                         ->orderBy('id','desc')
                         ->paginate(15);
@@ -450,4 +452,36 @@ class ApiController extends Controller
             'data'=> $data,
         ]);
     }
+
+    public function getPaymentInfo(Request $request){
+        if($request->type == "bkash"){
+            $data = Payment::where('type','bkash')->get();
+            return response()->json([
+                'success'=> true,
+                'data'=> $data,
+            ]);
+        }
+        if($request->type == "rocket"){
+            $data = Payment::where('type','rocket')->get();
+            return response()->json([
+                'success'=> true,
+                'data'=> $data,
+            ]);
+        }
+        if($request->type == "nagad"){
+            $data = Payment::where('type','nagad')->get();
+            return response()->json([
+                'success'=> true,
+                'data'=> $data,
+            ]);
+        }
+        if($request->type == "all"){
+            $data = Payment::orderBy('type','desc')->get();
+            return response()->json([
+                'success'=> true,
+                'data'=> $data,
+            ]);
+        }
+    }
+
 }

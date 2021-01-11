@@ -44,6 +44,12 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
+                                        <label>Diamond</label>
+                                        <input type="text" name="diamond" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
                                         <input type="submit" value="Save Package" class="btn btn-success rounded">
                                     </div>
                                 </div>
@@ -67,6 +73,7 @@
                                     <th scope="col">Game</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Amount</th>
+                                    <th scope="col">Diamond</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -80,6 +87,7 @@
                                         <td>{{$item->game_name}}</td>
                                         <td>{{$item->title}}</td>
                                         <td>{{$item->amount}}</td>
+                                        <td>{{$item->diamond}}</td>
                                         <td>@if($item->status == 1) Active @endif</td>
                                         <td>
                                             <a href="{{url('/delete/package')}}/{{$item->id}}" class="btn btn-danger btn-sm rounded"><i class="far fa-trash-alt"></i></a>

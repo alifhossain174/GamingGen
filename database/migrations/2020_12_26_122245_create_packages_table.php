@@ -19,6 +19,7 @@ class CreatePackagesTable extends Migration
             $table->integer('game_id')->nullable();
             $table->string('title')->nullable();
             $table->double('amount')->nullable();
+            $table->double('diamond')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });

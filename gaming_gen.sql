@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2021 at 09:28 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.13
+-- Generation Time: Jan 11, 2021 at 07:38 PM
+-- Server version: 10.4.16-MariaDB
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -92,6 +92,13 @@ CREATE TABLE `contest_ratings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contest_ratings`
+--
+
+INSERT INTO `contest_ratings` (`id`, `contest_id`, `user_id`, `star`, `comments`, `created_at`, `updated_at`) VALUES
+(2, 1, 1, '5', 'good', '2021-01-11 10:09:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -215,8 +222,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2020_12_26_143129_create_package_requests_table', 7),
 (23, '2020_12_21_150845_create_contests_table', 8),
 (24, '2020_12_21_190207_create_contest_subscriptions_table', 9),
-(26, '2020_12_26_122245_create_packages_table', 10),
-(28, '2021_01_11_064325_create_contest_ratings_table', 11);
+(28, '2021_01_11_064325_create_contest_ratings_table', 11),
+(30, '2021_01_11_173737_create_payments_table', 12),
+(31, '2020_12_26_122245_create_packages_table', 13);
 
 -- --------------------------------------------------------
 
@@ -230,6 +238,7 @@ CREATE TABLE `packages` (
   `game_id` int(11) DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` double DEFAULT NULL,
+  `diamond` double DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -264,6 +273,30 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `number`, `type`, `description`, `created_at`, `updated_at`) VALUES
+(1, '738554738595', 'bkash', 'Bkash Number', NULL, NULL),
+(2, '738535338323', 'rocket', 'Rocket Number', NULL, NULL),
+(3, '894839375532', 'nagad', 'Nogod Number', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -424,6 +457,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sliders`
 --
 ALTER TABLE `sliders`
@@ -469,7 +508,7 @@ ALTER TABLE `contests`
 -- AUTO_INCREMENT for table `contest_ratings`
 --
 ALTER TABLE `contest_ratings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `contest_subscriptions`
@@ -499,18 +538,24 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `package_requests`
 --
 ALTER TABLE `package_requests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
