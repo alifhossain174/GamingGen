@@ -15,6 +15,7 @@ use App\Package;
 use App\PackageRequest;
 use App\Contest;
 use App\ContestWinner;
+use App\ContestRating;
 use Carbon\Carbon;
 use App\Trend;
 use App\ContestSubscription;
@@ -422,6 +423,31 @@ class ApiController extends Controller
     }
 
     public function submitContestRating(Request $request){
+        ContestRating::insert([
+            'contest_id' => $request->contest_id,
+            'user_id' => $request->user_id,
+            'star' => $request->star,
+            'comments' => $request->comments,
+            'created_at' => Carbon::now(),
+        ]);
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Rating Submitted Successfully'
+        ]);
+    }
 
+    public function getContestRatingList(Request $request){
+        $data = DB::table('contest_ratings')
+                        ->join('contests','contests.id','=','contest_ratings.contest_id')
+                        ->join('users','users.id','=','contest_ratings.user_id')
+                        ->select('contest_ratings.*','contests.title','users.name as user_name')
+                        ->where('contest_ratings.user_id',$request->user_id)
+                        ->orderBy('id','desc')
+                        ->paginate(15);
+
+        return response()->json([
+            'success'=> true,
+            'data'=> $data,
+        ]);
     }
 }

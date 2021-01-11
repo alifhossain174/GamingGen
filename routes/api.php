@@ -38,4 +38,5 @@ Route::group(['namespace'=>'Api'],function(){
 
     //contest rating api
     Route::post('submit/contest/rating','ApiController@submitContestRating');
+    Route::post('get/contest/rating/list','ApiController@getContestRatingList');
 });

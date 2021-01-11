@@ -14,6 +14,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">SL</th>
+                                    <th scope="col">Time</th>
                                     <th scope="col">Contest Title</th>
                                     <th scope="col">User Name</th>
                                     <th scope="col">Star</th>
@@ -26,6 +27,12 @@
                                 @foreach ($contest_ratings as $index => $item)
                                     <tr>
                                         <td>{{ $index+$contest_ratings->firstItem() }}</td>
+                                        <td>
+                                            @php
+                                                $newDate = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d M, Y');
+                                                echo $newDate;
+                                            @endphp
+                                        </td>
                                         <td>{{$item->title}}</td>
                                         <td>{{$item->user_name}}</td>
                                         <td>{{$item->star}}</td>

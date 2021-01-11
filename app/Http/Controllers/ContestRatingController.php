@@ -15,6 +15,7 @@ class ContestRatingController extends Controller
                                 ->join('contests','contests.id','=','contest_ratings.contest_id')
                                 ->join('users','users.id','=','contest_ratings.user_id')
                                 ->select('contest_ratings.*','contests.title','users.name as user_name')
+                                ->orderBy('id','desc')
                                 ->paginate(15);
 
         return view('backend.contest_rating',compact('contest_ratings'));
