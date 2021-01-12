@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2021 at 06:00 PM
+-- Generation Time: Jan 12, 2021 at 06:09 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `add_money` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `refference_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -39,13 +40,6 @@ CREATE TABLE `add_money` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `add_money`
---
-
-INSERT INTO `add_money` (`id`, `user_id`, `phone`, `payment_method`, `amount`, `refference_no`, `transaction_id`, `status`, `created_at`, `updated_at`) VALUES
-(5, 1, '3453454', 'werwer', '34345', 'were3434', '345345etrert', '1', NULL, '2021-01-12 10:57:05');
 
 -- --------------------------------------------------------
 
@@ -216,15 +210,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2020_12_21_142435_create_games_table', 1),
 (6, '2020_12_21_144437_create_trends_table', 1),
 (11, '2020_12_22_171905_create_contest_winners_table', 2),
-(13, '2020_12_23_172401_create_with_draws_table', 3),
-(15, '2020_12_23_184620_create_add_money_table', 4),
 (16, '2020_12_25_161321_create_test_models_table', 5),
 (20, '2020_12_26_143129_create_package_requests_table', 7),
 (23, '2020_12_21_150845_create_contests_table', 8),
 (24, '2020_12_21_190207_create_contest_subscriptions_table', 9),
 (28, '2021_01_11_064325_create_contest_ratings_table', 11),
 (30, '2021_01_11_173737_create_payments_table', 12),
-(31, '2020_12_26_122245_create_packages_table', 13);
+(31, '2020_12_26_122245_create_packages_table', 13),
+(32, '2020_12_23_172401_create_with_draws_table', 14),
+(33, '2020_12_23_184620_create_add_money_table', 15);
 
 -- --------------------------------------------------------
 
@@ -370,6 +364,7 @@ CREATE TABLE `with_draws` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `refference_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -378,13 +373,6 @@ CREATE TABLE `with_draws` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `with_draws`
---
-
-INSERT INTO `with_draws` (`id`, `user_id`, `phone`, `payment_method`, `amount`, `refference_no`, `transaction_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '01969005035', 'bkash', '100', NULL, NULL, '0', '2020-12-23 12:06:15', '2020-12-25 01:08:36');
 
 --
 -- Indexes for dumped tables
@@ -496,7 +484,7 @@ ALTER TABLE `with_draws`
 -- AUTO_INCREMENT for table `add_money`
 --
 ALTER TABLE `add_money`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contests`
@@ -538,7 +526,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `packages`
@@ -580,7 +568,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `with_draws`
 --
 ALTER TABLE `with_draws`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

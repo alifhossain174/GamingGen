@@ -17,6 +17,7 @@ class CreateAddMoneyTable extends Migration
             $table->id();
             $table->integer('user_id')->nullable();
             $table->string('phone')->nullable();
+            $table->string('customer_number')->nullable();
             $table->string('payment_method')->nullable();
             $table->string('amount')->nullable();
             $table->string('refference_no')->nullable();

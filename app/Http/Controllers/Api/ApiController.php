@@ -236,6 +236,7 @@ class ApiController extends Controller
             WithDraw::insert([
                 'user_id' => $request->user_id,
                 'phone' => $request->phone,
+                'customer_number' => $request->customer_number,
                 'payment_method' => $request->payment_method,
                 'amount' => $request->amount,
                 'refference_no' => $request->refference_no,
@@ -261,6 +262,7 @@ class ApiController extends Controller
         AddMoney::insert([
             'user_id' => $request->user_id,
             'phone' => $request->phone,
+            'customer_number' => $request->customer_number,
             'payment_method' => $request->payment_method,
             'amount' => $request->amount,
             'refference_no' => $request->refference_no,

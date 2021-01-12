@@ -16,6 +16,7 @@
                                     <th scope="col">SL</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Phone</th>
+                                    <th scope="col">Customer Phone</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Refference</th>
                                     <th scope="col">Transaction ID</th>
@@ -30,6 +31,7 @@
                                         <td>{{ $index+$add_moneys->firstItem() }}</td>
                                         <td>{{$item->user_name}}</td>
                                         <td>{{$item->phone}}</td>
+                                        <td>{{$item->customer_number}}</td>
                                         <td>{{$item->amount}}</td>
                                         <td>{{$item->refference_no}}</td>
                                         <td>{{$item->transaction_id}}</td>
