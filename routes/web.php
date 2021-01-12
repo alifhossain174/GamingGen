@@ -67,4 +67,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/contest/rating/page','ContestRatingController@contestRatingPage');
     Route::get('/delete/contest/rating/{id}','ContestRatingController@deleteContestRating');
 
+    //payment
+    Route::get('/payment/page','PaymentController@paymentPage');
+    Route::post('/add/new/payment','PaymentController@addNewPayment');
+    Route::get('/delete/payment/{id}','PaymentController@deletePayment');
+
 });

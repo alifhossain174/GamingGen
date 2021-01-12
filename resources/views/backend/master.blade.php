@@ -112,6 +112,7 @@
 						</ul>
                     </li>
                     <li><a href="{{url('/contest/rating/page')}}"> <i class="fas fa-poll-h"></i> Contest Survey </a></li>
+                    <li><a href="{{url('/payment/page')}}"> <i class="fas fa-money-check-alt"></i> Payment </a></li>
 
 				</ul>
 			</div>

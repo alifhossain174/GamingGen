@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2021 at 07:38 PM
+-- Generation Time: Jan 12, 2021 at 06:00 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -45,7 +45,7 @@ CREATE TABLE `add_money` (
 --
 
 INSERT INTO `add_money` (`id`, `user_id`, `phone`, `payment_method`, `amount`, `refference_no`, `transaction_id`, `status`, `created_at`, `updated_at`) VALUES
-(5, 1, '3453454', 'werwer', '34345', 'were3434', '345345etrert', '0', NULL, '2020-12-25 01:49:01');
+(5, 1, '3453454', 'werwer', '34345', 'were3434', '345345etrert', '1', NULL, '2021-01-12 10:57:05');
 
 -- --------------------------------------------------------
 
@@ -294,9 +294,9 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `number`, `type`, `description`, `created_at`, `updated_at`) VALUES
-(1, '738554738595', 'bkash', 'Bkash Number', NULL, NULL),
 (2, '738535338323', 'rocket', 'Rocket Number', NULL, NULL),
-(3, '894839375532', 'nagad', 'Nogod Number', NULL, NULL);
+(3, '894839375532', 'nagad', 'Nogod Number', NULL, NULL),
+(4, '2342342342432', 'bkash', 'Testing Number', '2021-01-12 10:52:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -357,7 +357,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `image`, `department`, `semester`, `profession`, `details`, `amount`, `referral_code`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 3210, '123', NULL, '2020-12-22 10:54:01', '2021-01-08 12:47:48'),
+(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 37555, '123', NULL, '2020-12-22 10:54:01', '2021-01-12 10:57:05'),
 (2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, 10, '123', NULL, '2020-12-22 14:20:36', '2020-12-25 12:24:38');
 
 -- --------------------------------------------------------
@@ -556,7 +556,7 @@ ALTER TABLE `package_requests`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sliders`
