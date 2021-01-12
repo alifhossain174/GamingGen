@@ -39,6 +39,8 @@ class PackageController extends Controller
             'image' => $image,
             'title' => $request->title,
             'amount' => $request->amount,
+            'amount' => $request->amount,
+            'diamond' => $request->diamond,
             'game_id' => $request->game_id,
             'created_at' => Carbon::now()
         ]);
