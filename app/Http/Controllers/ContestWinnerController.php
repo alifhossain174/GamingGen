@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\ContestWinner;
 use App\Contest;
+use App\Game;
 use App\User;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
@@ -20,8 +21,9 @@ class ContestWinnerController extends Controller
                             ->orderBy('contest_winners.contest_id','desc')
                             ->paginate(15);
 
-        $contests = Contest::where('status',1)->get();
-        return view('backend.contest_winner',compact('contest_winner','contests'));
+        $games = Game::all();
+        $users = User::all();
+        return view('backend.contest_winner',compact('contest_winner','games','users'));
     }
 
     public function searchCustomerForNewSale(Request $request){
@@ -61,43 +63,50 @@ class ContestWinnerController extends Controller
     }
 
     public function addNewContestWinner(Request $request){
+
         $contest_info = Contest::where('id',$request->contest_id)->first();
 
-        if($request->position == 1){
-            $amount = $contest_info->first;
-        }
-        elseif($request->position == 2){
-            $amount = $contest_info->second;
-        }
-        else{
-            $amount = $contest_info->third;
-        }
+        $i = 0;
+        $amount = 0;
+        $position = 0;
+        foreach($request->user_id as $user_id){
+            if($request->position[$i] > 0){
+                if($request->position[$i] == 1){
+                    $amount = $contest_info->first;
+                }
+                if($request->position[$i] == 2){
+                    $amount = $contest_info->second;
+                }
+                if($request->position[$i] == 3){
+                    $amount = $contest_info->third;
+                }
 
-        if(ContestWinner::where('user_id',$request->user_id)->where('contest_id',$request->contest_id)->where('position',$request->position)->exists()){
-            Toastr::warning('Alread a Winner', 'Success');
-            return back();
-        }
-        else{
-            ContestWinner::insert([
-                'user_id' => $request->user_id,
-                'contest_id' => $request->contest_id,
-                'game_id' => $contest_info->game_id,
-                'position' => $request->position,
-                'winning_amount' => $amount,
-                'created_at' => Carbon::now()
-            ]);
-
-            User::where('id',$request->user_id)->increment('amount',$amount);
-
-            if(ContestWinner::where('contest_id',$request->contest_id)->count() == 3){
-                Contest::where('id',$request->contest_id)->update([
-                    'status' => 0,
+                ContestWinner::insert([
+                    'user_id' => $user_id,
+                    'contest_id' => $request->contest_id,
+                    'game_id' => $request->game_id,
+                    'position' => $request->position[$i],
+                    'winning_amount' => $amount,
+                    'created_at' => Carbon::now()
                 ]);
+                User::where('id',$request->user_id)->increment('amount',$amount);
+                $i++;
             }
-
         }
+
+        // if(ContestWinner::where('contest_id',$request->contest_id)->count() == 3){
+        //     Contest::where('id',$request->contest_id)->update([
+        //         'status' => 0,
+        //     ]);
+        // }
+
         Toastr::success('Contest Winner Added', 'Success');
         return back();
+    }
+
+    public function findContest($game_id){
+        $contests = Contest::where('game_id',$game_id)->get();
+        return response()->json($contests);
     }
 
     public function deleteContestWinner($id,$contest_id){

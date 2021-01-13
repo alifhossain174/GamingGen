@@ -16,7 +16,7 @@
                                     <th scope="col">SL</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Phone</th>
-                                    <th scope="col">Cuatomer Phone</th>
+                                    <th scope="col">Customer Phone</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Refference</th>
                                     <th scope="col">Transaction ID</th>
@@ -77,9 +77,9 @@
                         <input type="hidden" name="user_id" id="user_id">
 
                         <div class="form-group">
-                            <label for="phone" class="col-sm-12 control-label">Contact No</label>
+                            <label for="phone" class="col-sm-12 control-label">Customer Number</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="" readonly>
+                                <input type="text" class="form-control" id="customer_number" name="customer_number" placeholder="Customer Number" value="" readonly>
                             </div>
                         </div>
 
@@ -94,6 +94,13 @@
                             <label for="amount" class="col-sm-12 control-label">Amount</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount" value="" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-12 control-label">Phone No</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="">
                             </div>
                         </div>
 
@@ -136,16 +143,18 @@
             $('body').on('click', '.editProduct', function () {
                 var product_id = $(this).data('id');
                 $.get("{{ url('/get/withdraw/data/for/modal') }}" +'/' + product_id +'/edit', function (data) {
+                    // console.log(data.data.id);
                     $('#modelHeading').html("Approve Withdraw");
                     $('#saveBtn').val("Approve");
                     $('#ajaxModel').modal('show');
-                    $('#product_id').val(data.id);
-                    $('#user_id').val(data.user_id);
-                    $('#phone').val(data.phone);
-                    $('#payment_method').val(data.payment_method);
-                    $('#amount').val(data.amount);
-                    $('#refference_no').val(data.refference_no);
-                    $('#transaction_id').val(data.transaction_id);
+                    $('#product_id').val(data.data.id);
+                    $('#user_id').val(data.data.user_id);
+                    $('#phone').val(data.data.phone);
+                    $('#customer_number').val(data.data.customer_number);
+                    $('#payment_method').val(data.data.payment_method);
+                    $('#amount').val(data.data.amount);
+                    $('#refference_no').val(data.data.refference_no);
+                    $('#transaction_id').val(data.data.transaction_id);
                 })
             });
 

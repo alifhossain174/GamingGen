@@ -144,7 +144,18 @@ class ApiController extends Controller
                         ->first();
 
             if(DB::table('contest_subscriptions')->where('contest_id',$list->id)->where('user_id',$request->user_id)->exists()){
-                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => 1);
+                $status = DB::table('contest_subscriptions')->where('contest_id',$list->id)->where('user_id',$request->user_id)->first();
+                $subscribed = 0;
+                if($status->status == 0){
+                    $subscribed = 3;
+                }
+                if($status->status == 1){
+                    $subscribed = 1;
+                }
+                if($status->status == 2){
+                    $subscribed = 2;
+                }
+                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => $subscribed);
             }
             else{
                 $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => 0);
@@ -393,7 +404,7 @@ class ApiController extends Controller
         $data = DB::table('package_requests')
                     ->join('packages','packages.id','=','package_requests.pakage_id')
                     ->join('users','users.id','=','package_requests.user_id')
-                    ->select('package_requests.*','packages.title as package_title','users.name as user_name')
+                    ->select('package_requests.*','packages.title as package_title','packages.diamond','users.name as user_name')
                     ->where('package_requests.user_id',$request->user_id)
                     ->get();
 

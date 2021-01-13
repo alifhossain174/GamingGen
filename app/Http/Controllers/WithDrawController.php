@@ -28,11 +28,15 @@ class WithDrawController extends Controller
 
     public function getDataForModalApproveWithDraw($id){
         $product = DB::table('with_draws')->where('id',$id)->first();
-        return response()->json($product);
+        return response()->json([
+            'data' => $product,
+            'info' => "Hello"
+        ]);
     }
 
     public function saveTransactionId(Request $request){
         WithDraw::where('id',$request->product_id)->update([
+            'phone' => $request->phone,
             'refference_no' => $request->refference_no,
             'transaction_id' => $request->transaction_id,
             'status' => 1,

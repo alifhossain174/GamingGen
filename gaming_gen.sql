@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2021 at 06:09 PM
+-- Generation Time: Jan 13, 2021 at 08:16 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -69,7 +69,7 @@ CREATE TABLE `contests` (
 --
 
 INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `created_at`, `updated_at`) VALUES
-(1, 1, '234234', 'qweqwe', '2021-01-08', '12:01 AM', 1, '100', '12312', '1231', '123123', '2', '2021-01-08 12:13:50', NULL);
+(1, 1, '234234', 'qweqwe', '2021-01-08', '12:01 AM', 1, '100', '12312', '1231', '123123', '2', '2021-01-08 12:13:50', '2021-01-13 13:14:29');
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,7 @@ CREATE TABLE `contest_subscriptions` (
 
 INSERT INTO `contest_subscriptions` (`id`, `user_id`, `contest_id`, `date`, `time`, `amount`, `status`, `created_at`, `updated_at`) VALUES
 (5, 1, 1, '2021-01-08', '12:01 AM', '100', '2', '2021-01-08 12:47:03', '2021-01-09 07:36:11'),
-(6, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:40', NULL),
+(6, 1, 1, '2021-01-08', '12:01 AM', '100', '1', '2021-01-08 12:47:40', '2021-01-13 10:58:14'),
 (7, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:42', NULL),
 (8, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:45', NULL),
 (9, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:46', NULL),
@@ -146,7 +146,8 @@ CREATE TABLE `contest_winners` (
 --
 
 INSERT INTO `contest_winners` (`id`, `user_id`, `contest_id`, `game_id`, `position`, `winning_amount`, `created_at`, `updated_at`) VALUES
-(15, 1, 1, 1, 1, 1200, '2021-01-08 11:08:07', NULL);
+(22, 1, 1, 1, 2, 1231, '2021-01-13 13:14:39', NULL),
+(23, 2, 1, 1, 3, 123123, '2021-01-13 13:14:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -238,6 +239,13 @@ CREATE TABLE `packages` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `packages`
+--
+
+INSERT INTO `packages` (`id`, `image`, `game_id`, `title`, `amount`, `diamond`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'package_images/6vr5Y1610474400.png', 1, 'wqe', 2323, 23, 1, '2021-01-12 12:00:00', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -255,6 +263,13 @@ CREATE TABLE `package_requests` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `package_requests`
+--
+
+INSERT INTO `package_requests` (`id`, `pakage_id`, `user_id`, `amount`, `username_email_contact`, `password`, `status`, `created_at`, `updated_at`) VALUES
+(4, 2, 1, 500, 'asdasd', 'asdasdasd', '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -351,8 +366,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `image`, `department`, `semester`, `profession`, `details`, `amount`, `referral_code`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 37555, '123', NULL, '2020-12-22 10:54:01', '2021-01-12 10:57:05'),
-(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, 10, '123', NULL, '2020-12-22 14:20:36', '2020-12-25 12:24:38');
+(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 139183, '123', NULL, '2020-12-22 10:54:01', '2021-01-13 13:14:39'),
+(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, -14764, '123', NULL, '2020-12-22 14:20:36', '2021-01-13 13:14:29');
 
 -- --------------------------------------------------------
 
@@ -373,6 +388,18 @@ CREATE TABLE `with_draws` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `with_draws`
+--
+
+INSERT INTO `with_draws` (`id`, `user_id`, `phone`, `customer_number`, `payment_method`, `amount`, `refference_no`, `transaction_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '0', '2021-01-13 10:00:10', NULL),
+(2, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '0', '2021-01-13 10:00:23', NULL),
+(3, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '0', '2021-01-13 10:00:31', NULL),
+(4, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '0', '2021-01-13 10:00:33', NULL),
+(5, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '2', '2021-01-13 10:00:37', '2021-01-13 10:33:25'),
+(6, 1, '01969005035', '9049493383', 'bkash', '1000', '18384736272', '12312123123', '1', '2021-01-13 10:01:04', '2021-01-13 10:32:50');
 
 --
 -- Indexes for dumped tables
@@ -508,7 +535,7 @@ ALTER TABLE `contest_subscriptions`
 -- AUTO_INCREMENT for table `contest_winners`
 --
 ALTER TABLE `contest_winners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -532,13 +559,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `package_requests`
 --
 ALTER TABLE `package_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -568,7 +595,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `with_draws`
 --
 ALTER TABLE `with_draws`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
