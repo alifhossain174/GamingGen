@@ -100,7 +100,9 @@
                         <div class="form-group">
                             <label for="phone" class="col-sm-12 control-label">Phone No</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="">
+                                <div id="phone">
+
+                                </div>
                             </div>
                         </div>
 
@@ -149,12 +151,12 @@
                     $('#ajaxModel').modal('show');
                     $('#product_id').val(data.data.id);
                     $('#user_id').val(data.data.user_id);
-                    $('#phone').val(data.data.phone);
                     $('#customer_number').val(data.data.customer_number);
                     $('#payment_method').val(data.data.payment_method);
                     $('#amount').val(data.data.amount);
                     $('#refference_no').val(data.data.refference_no);
                     $('#transaction_id').val(data.data.transaction_id);
+                    $('#phone').html(data.select_options);
                 })
             });
 

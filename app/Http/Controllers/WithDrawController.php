@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\WithDraw;
 use App\User;
+use App\Payment;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 
@@ -28,9 +29,17 @@ class WithDrawController extends Controller
 
     public function getDataForModalApproveWithDraw($id){
         $product = DB::table('with_draws')->where('id',$id)->first();
+        $phone_of_this_payment_type = Payment::where('type',$product->payment_method)->get();
+
+        $select_options = "<select name='phone' class='form-control' required><option value=''>Select Option</option>";
+            foreach($phone_of_this_payment_type as $item){
+                $select_options .= "<option value='".$item->number."'>".$item->number."</option>";
+            }
+        $select_options .= "</select>";
+
         return response()->json([
             'data' => $product,
-            'info' => "Hello"
+            'select_options' => $select_options
         ]);
     }
 
