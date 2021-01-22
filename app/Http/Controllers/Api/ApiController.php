@@ -386,17 +386,31 @@ class ApiController extends Controller
     }
 
     public function packageRequest(Request $request){
-        PackageRequest::insert([
-            'pakage_id' => $request->pakage_id,
-            'user_id' => $request->user_id,
-            'amount' => $request->amount,
-            'username_email_contact' => $request->username_email_contact,
-            'password' => $request->password,
-        ]);
-        return response()->json([
-            'success'=> true,
-            'message'=> 'Sent Request Successfully'
-        ]);
+        $user_info = User::where('id',$request->user_id)->first();
+        $package_info = Package::where('id',$request->pakage_id)->first();
+
+        if($user_info->amount < $package_info->amount){
+            return response()->json([
+                'success'=> false,
+                'message'=> 'Not Enough Balance'
+            ]);
+        }
+        else{
+            User::where('id',$request->user_id)->decrement('amount',$package_info->amount);
+            PackageRequest::insert([
+                'pakage_id' => $request->pakage_id,
+                'user_id' => $request->user_id,
+                'amount' => $package_info->amount,
+                'username_email_contact' => $request->username_email_contact,
+                'password' => $request->password,
+            ]);
+            return response()->json([
+                'success'=> true,
+                'message'=> 'Sent Request Successfully'
+            ]);
+        }
+
+
     }
 
     public function requestedPackageList(Request $request){

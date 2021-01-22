@@ -20,6 +20,8 @@
                                     <th scope="col">Email</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">User Credential</th>
+                                    <th scope="col">User Password</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col" style="text-align: center">Action</th>
                                 </tr>
                             </thead>
@@ -34,6 +36,7 @@
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->amount}}</td>
                                         <td>{{$item->username_email_contact}}</td>
+                                        <td>{{$item->password}}</td>
                                         <td>
                                             @if($item->status == 0)
                                             Pending
