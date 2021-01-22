@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Game;
+use App\User;
 use App\Package;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -66,6 +67,7 @@ class PackageController extends Controller
                                 ->join('games','games.id','=','packages.game_id')
                                 ->join('users','users.id','=','package_requests.user_id')
                                 ->select('package_requests.*','packages.title as package_title','users.name as user_name','users.email','games.game_name')
+                                ->orderBy('id','desc')
                                 ->paginate(15);
 
         return view('backend.package_requests',compact('package_requests'));
@@ -78,10 +80,16 @@ class PackageController extends Controller
     }
 
     public function denyPackageRequest($id){
+
+        $package_request_info = PackageRequest::where('id',$id)->first();
+
         PackageRequest::where('id',$id)->update([
             'status' => 2,
             'updated_at' => Carbon::now()
         ]);
+
+        User::where('id',$package_request_info->user_id)->increment('amount',$package_request_info->amount);
+
         Toastr::warning('Package Request has been Denied', 'Denied');
         return back();
     }
