@@ -25,11 +25,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/trend/page','TrendController@trendPage');
     Route::post('/add/new/trend','TrendController@addNewTrend');
     Route::get('/delete/trend/{id}','TrendController@deleteTrend');
+    Route::get('/edit/trend/{id}','TrendController@editTrend');
+    Route::post('/update/trend','TrendController@updateTrend');
 
     // contest
     Route::get('/contest/page','ContestController@contestPage');
     Route::post('/add/new/contest','ContestController@addNewContest');
-    Route::get('/delete/trend/{id}','ContestController@deleteContest');
+    Route::get('/delete/contest/{id}','ContestController@deleteContest');
     Route::get('/manage/contest','ContestController@viewContestSubscribers');
     Route::get('/delete/contest/subscriber/{id}','ContestController@deleteContestSubscriber');
     Route::get('/approve/contest/subscriber/{id}','ContestController@approveContestSubscriber');

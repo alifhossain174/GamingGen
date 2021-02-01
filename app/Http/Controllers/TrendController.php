@@ -57,4 +57,48 @@ class TrendController extends Controller
         Toastr::error('Trend has been Deleted', 'Deleted');
         return back();
     }
+
+    public function editTrend($id){
+        $data = Trend::where('id',$id)->first();
+        $games = Game::all();
+        return view('backend.edit_trend',compact('data','games'));
+    }
+
+    public function updateTrend(Request $request){
+
+        $data = Trend::where('id',$request->trend_id)->first();
+
+        $image = null;
+
+        if ($request->hasFile('image')){
+
+            if($data->image != null){
+                if(file_exists(public_path($data->image))){
+                    unlink($data->image);
+                }
+            }
+
+            $get_image = $request->file('image');
+            $image_name = str::random(5) . time() . '.' . $get_image->getClientOriginalExtension();
+            Image::make($get_image)->save('trend_images/' . $image_name, 50);
+            $image = "trend_images/" . $image_name;
+
+            Trend::where('id',$request->trend_id)->update([
+                'image' => $image,
+            ]);
+        }
+
+
+        Trend::where('id',$request->trend_id)->update([
+            'game_id' => $request->game_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'created_at' => Carbon::now()
+        ]);
+
+        Toastr::success('Trend has been Added', 'Success');
+        return redirect('/trend/page');
+
+
+    }
 }

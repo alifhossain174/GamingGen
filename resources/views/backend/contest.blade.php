@@ -116,7 +116,7 @@
                                         <td>{{$item->participants}}</td>
                                         <td>@if($item->status == 1) <span class="text-success">Active</span> @endif</td>
                                         <td>
-                                            <a href="{{url('/delete/trend')}}/{{$item->id}}" class="btn btn-danger btn-sm rounded"><i class="far fa-trash-alt"></i></a>
+                                            <a href="{{url('/delete/contest')}}/{{$item->id}}" class="btn btn-danger btn-sm rounded"><i class="far fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

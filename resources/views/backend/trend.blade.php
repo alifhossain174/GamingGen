@@ -80,6 +80,7 @@
                                         <td>{{$item->title}}</td>
                                         <td>{{$item->description}}</td>
                                         <td>
+                                            <a href="{{url('/edit/trend')}}/{{$item->id}}" class="btn btn-warning btn-sm rounded">Edit</a>
                                             <a href="{{url('/delete/trend')}}/{{$item->id}}" class="btn btn-danger btn-sm rounded">Delete</a>
                                         </td>
                                     </tr>
