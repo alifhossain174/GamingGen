@@ -14,6 +14,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">SL</th>
+                                    <th scope="col">Date</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Phone</th>
                                     <th scope="col">Customer Phone</th>
@@ -29,6 +30,7 @@
                                 @foreach ($add_moneys as $index => $item)
                                     <tr>
                                         <td>{{ $index+$add_moneys->firstItem() }}</td>
+                                        <td>{{$item->created_at}}</td>
                                         <td>{{$item->user_name}}</td>
                                         <td>{{$item->phone}}</td>
                                         <td>{{$item->customer_number}}</td>
