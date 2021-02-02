@@ -26,7 +26,10 @@ class CreateUsersTable extends Migration
             $table->string('profession')->nullable();
             $table->string('details')->nullable();
             $table->double('amount')->nullable();
+            $table->double('winning_amount')->nullable();
             $table->string('referral_code')->nullable();
+            $table->string('ban')->nullable();
+            $table->string('ban_day')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

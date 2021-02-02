@@ -13,6 +13,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // users list
     Route::get('/users/list','UserController@allUserList');
+    Route::post('/make/user/banned','UserController@bannedUsers');
 
     // sliders
     Route::get('/slider/page','SliderController@sliderPage');
@@ -42,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/delete/contest/subscriber/{id}','ContestController@deleteContestSubscriber');
     Route::get('/approve/contest/subscriber/{id}','ContestController@approveContestSubscriber');
     Route::get('/deny/contest/subscriber/{id}','ContestController@denyContestSubscriber');
+    Route::get('/close/contest/{id}','ContestController@closeContest');
+    Route::get('/open/contest/{id}','ContestController@openContest');
 
     // contest winner
     Route::get('/contest/winner/page','ContestWinnerController@contestWinnerPage');
@@ -74,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/manage/package','PackageController@managePakcage');
     Route::get('/delete/package/request/{id}','PackageController@deletePackageRequest');
     Route::get('/deny/package/request/{id}','PackageController@denyPackageRequest');
+    Route::get('/approve/package/request/{id}','PackageController@approvePackageRequest');
 
     // contest rating
     Route::get('/contest/rating/page','ContestRatingController@contestRatingPage');

@@ -104,7 +104,7 @@ class ContestController extends Controller
                 ->join('contests','contests.id','=','contest_subscriptions.contest_id')
                 ->join('games','games.id','=','contests.game_id')
                 ->join('users','users.id','=','contest_subscriptions.user_id')
-                ->select('contest_subscriptions.*','contests.title as contest_title','users.name as user_name','users.email','games.game_name')
+                ->select('contest_subscriptions.*','contests.title as contest_title','users.name as user_name','games.game_name')
                 ->orderBy('contest_id','desc')
                 ->paginate(15);
 
@@ -132,6 +132,22 @@ class ContestController extends Controller
             'updated_at' => Carbon::now()
         ]);
         Toastr::warning('Contest Subscriber has been Denied', 'Denied');
+        return back();
+    }
+
+    public function closeContest($id){
+        Contest::where('id',$id)->update([
+            'close' => 1,
+        ]);
+        Toastr::error('Contest has been Closed', 'Closed');
+        return back();
+    }
+
+    public function openContest($id){
+        Contest::where('id',$id)->update([
+            'close' => 0,
+        ]);
+        Toastr::success('Contest has been Opened', 'Closed');
         return back();
     }
 }

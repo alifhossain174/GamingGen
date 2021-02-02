@@ -18,6 +18,7 @@
                                     <th scope="col">Game</th>
                                     <th scope="col">User Name</th>
                                     <th scope="col">Email</th>
+                                    <th scope="col">Password</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Time</th>
                                     <th scope="col">Amount</th>

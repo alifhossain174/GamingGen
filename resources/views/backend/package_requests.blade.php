@@ -49,7 +49,7 @@
                                         <td>
                                             <a href="{{url('/delete/package/request')}}/{{$item->id}}" class="btn btn-danger btn-sm rounded"><i class="far fa-trash-alt"></i></a>
                                             @if($item->status == 0)
-                                                <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Approve" class="edit btn btn-success btn-sm rounded editProduct">Approve</a>
+                                                <a href="{{url('/approve/package/request')}}/{{$item->id}}" class="btn btn-success btn-sm rounded">Approve</a>
                                                 <a href="{{url('/deny/package/request')}}/{{$item->id}}" class="btn btn-warning btn-sm rounded">Deny</a>
                                             @endif
                                         </td>

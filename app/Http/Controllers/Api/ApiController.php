@@ -43,6 +43,23 @@ class ApiController extends Controller
             $profession = Auth::user()->profession;
             $details = Auth::user()->details;
 
+            if(Auth::user()->ban == 1){
+                if(Auth::user()->ban_day > date("Y-m-d")){
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'This User is Banned'
+                    ])->setStatusCode(200);
+                }
+                else{
+                    User::where('email',$request->email)->update([
+                        'ban' => 0,
+                        'ban_day' => Null
+                    ]);
+                    $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester, 'profession' => $profession, 'details' => $details);
+                    return response()->json(['success' =>true,'data'=>$data]);
+                }
+            }
+
             $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester, 'profession' => $profession, 'details' => $details);
             return response()->json(['success' =>true,'data'=>$data]);
         }
@@ -155,10 +172,10 @@ class ApiController extends Controller
                 if($status->status == 2){
                     $subscribed = 2;
                 }
-                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'joining_link' => $list->joining_link, 'room_no' => $list->room_no, 'description' => $list->description, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => $subscribed);
+                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'close' => $list->close, 'joining_link' => $list->joining_link, 'room_no' => $list->room_no, 'description' => $list->description, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => $subscribed);
             }
             else{
-                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'joining_link' => $list->joining_link, 'room_no' => $list->room_no, 'description' => $list->description, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => 0);
+                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'close' => $list->close, 'joining_link' => $list->joining_link, 'room_no' => $list->room_no, 'description' => $list->description, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => 0);
             }
         }
         return response()->json([
@@ -173,39 +190,51 @@ class ApiController extends Controller
 
         $already_subscribed_participants = ContestSubscription::where('contest_id',$request->contest_id)->where('status',1)->count();
 
-        if($user_info->amount >= $info->amount){
-            if($already_subscribed_participants > $info->participants){
-                return response()->json([
-                    'success'=> false,
-                    'message'=> 'Slot is fullfilled Already'
-                ]);
+        if($info->close == 0){
+            if($user_info->amount >= $info->amount){
+                if($already_subscribed_participants > $info->participants){
+                    return response()->json([
+                        'success'=> false,
+                        'message'=> 'Slot is fullfilled Already'
+                    ]);
+                }
+                else{
+                    ContestSubscription::insert([
+                        'user_id' => $request->user_id,
+                        'email' => $request->email,
+                        'password' => $request->password,
+                        'contest_id' => $request->contest_id,
+                        'date' => $info->date,
+                        'time' => $info->time,
+                        'amount' => $info->amount,
+                        'created_at' => Carbon::now()
+                    ]);
+                    $remaining_amount = $user_info->amount - $info->amount;
+                    User::where('id',$request->user_id)->update([
+                        'amount' => $remaining_amount,
+                        'updated_at' => Carbon::now()
+                    ]);
+                    return response()->json([
+                        'success'=> true,
+                        'message'=> 'Successfully Subscribed'
+                    ]);
+                }
             }
             else{
-                ContestSubscription::insert([
-                    'user_id' => $request->user_id,
-                    'contest_id' => $request->contest_id,
-                    'date' => $info->date,
-                    'time' => $info->time,
-                    'amount' => $info->amount,
-                    'created_at' => Carbon::now()
-                ]);
-                $remaining_amount = $user_info->amount - $info->amount;
-                User::where('id',$request->user_id)->update([
-                    'amount' => $remaining_amount,
-                    'updated_at' => Carbon::now()
-                ]);
                 return response()->json([
-                    'success'=> true,
-                    'message'=> 'Successfully Subscribed'
+                    'success'=> false,
+                    'message'=> 'Sorry! Dont have enough amount to subscribe the contest'
                 ]);
             }
         }
         else{
             return response()->json([
                 'success'=> false,
-                'message'=> 'Sorry! Dont have enough amount to subscribe the contest'
+                'message'=> 'Contest is Closed'
             ]);
         }
+
+
     }
 
     public function winningContestLists(Request $request){
@@ -237,10 +266,10 @@ class ApiController extends Controller
 
     public function withDrawAmount(Request $request){
         $user_info = User::where('id',$request->user_id)->first();
-        if($user_info->amount < $request->amount){
+        if($user_info->winning_amount < $request->amount){
             return response()->json([
                 'success'=> false,
-                'message'=> 'Sorry! Dont have enough amount to withdraw'
+                'message'=> 'Sorry! Dont have enough winning amount to withdraw'
             ]);
         }
         else{
@@ -253,7 +282,7 @@ class ApiController extends Controller
                 'refference_no' => $request->refference_no,
                 'created_at' => Carbon::now()
             ]);
-            User::where('id',$request->user_id)->decrement('amount',$request->amount);
+            User::where('id',$request->user_id)->decrement('winning_amount',$request->amount);
             return response()->json([
                 'success'=> true,
                 'message'=> 'Amount Withdraw request has been sent'

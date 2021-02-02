@@ -45,7 +45,9 @@
                                     <td>{{$item->details}}</td>
                                     <td>{{$item->amount}}</td>
                                     <td>
-                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-success btn-sm rounded mt-1 editProduct"><i class="far fa-eye"></i></a>
+                                        @if($item->ban != 1)
+                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-danger btn-sm rounded mt-1 editProduct"><i class="fas fa-times"></i></a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <?php $sl++; ?>
@@ -81,53 +83,17 @@
 
                 <div class="modal-body">
                     <form id="productForm" name="productForm" class="form-horizontal">
-                        <input type="hidden" name="product_id" id="product_id">
+                        <input type="hidden" name="user_id" id="user_id">
 
                         <div class="form-group">
-                            <label for="name" class="col-sm-12 control-label">Existing Project Title</label>
+                            <label for="name" class="col-sm-12 control-label">Ban User For</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="existing_title" name="existing_title" placeholder="Enter Title" value="" required="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-12 control-label">Project Period</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="existing_period" name="existing_period" placeholder="Enter Period" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-12 control-label">Year</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="year" name="year" placeholder="Enter Year" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-12 control-label">Project Donor</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="existing_donar" name="existing_donar" placeholder="Donor" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-12 control-label">Project Budget</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="total_baget" name="total_baget" placeholder="Budget" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-12 control-label">Project Location</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="location" name="location" placeholder="Location" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-12 control-label">Thematic Area</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="thematic_area" name="thematic_area" placeholder="Thematic Area" value="">
+                                <input type="text" class="form-control" id="ban_day" name="ban_day" placeholder="Days" value="" required="">
                             </div>
                         </div>
 
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
+                            <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Ban User</button>
                         </div>
                     </form>
                 </div>
@@ -167,19 +133,12 @@
 
             $('body').on('click', '.editProduct', function () {
                 var product_id = $(this).data('id');
-                $.get("{{ url('/get/existing/project/data/for/modal') }}" +'/' + product_id +'/edit', function (data) {
-                    $('#modelHeading').html("Edit Existing Project");
+                // $.get("{{ url('/get/existing/project/data/for/modal') }}" +'/' + product_id +'/edit', function (data) {
+                    $('#modelHeading').html("Ban User");
                     $('#saveBtn').val("Edit Project");
                     $('#ajaxModel').modal('show');
-                    $('#product_id').val(data.id);
-                    $('#existing_title').val(data.existing_title);
-                    $('#existing_period').val(data.existing_period);
-                    $('#year').val(data.year);
-                    $('#existing_donar').val(data.existing_donar);
-                    $('#total_baget').val(data.total_baget);
-                    $('#location').val(data.location);
-                    $('#thematic_area').val(data.thematic_area);
-                })
+                    $('#user_id').val(product_id);
+                // })
             });
 
             $('#saveBtn').click(function (e) {
@@ -187,7 +146,7 @@
                 $(this).html('Updating..');
                 $.ajax({
                     data: $('#productForm').serialize(),
-                    url: "{{ url('/save/modal/data/existing/project') }}",
+                    url: "{{ url('/make/user/banned') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {

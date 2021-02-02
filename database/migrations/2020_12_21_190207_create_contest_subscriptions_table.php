@@ -16,6 +16,8 @@ class CreateContestSubscriptionsTable extends Migration
         Schema::create('contest_subscriptions', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->nullable();
+            $table->integer('email')->nullable();
+            $table->integer('password')->nullable();
             $table->integer('contest_id')->nullable();
             $table->string('date')->nullable();
             $table->string('time')->nullable();

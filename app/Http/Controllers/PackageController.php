@@ -93,4 +93,13 @@ class PackageController extends Controller
         Toastr::warning('Package Request has been Denied', 'Denied');
         return back();
     }
+
+    public function approvePackageRequest($id){
+        PackageRequest::where('id',$id)->update([
+            'status' => 1,
+            'updated_at' => Carbon::now()
+        ]);
+        Toastr::success('Package Request has been Apprved', 'Denied');
+        return back();
+    }
 }

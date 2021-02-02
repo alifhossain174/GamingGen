@@ -48,7 +48,12 @@
                                         <td>@if($item->status == 1) <span class="text-success">Active</span> @endif</td>
                                         <td>
                                             <a href="{{url('/delete/contest')}}/{{$item->id}}" class="btn btn-danger btn-sm mb-1 mr-1 rounded"><i class="far fa-trash-alt"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-warning btn-sm rounded editProduct"><i class="far fa-edit"></i></a>
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-warning btn-sm mb-1 mr-1 rounded editProduct"><i class="far fa-edit"></i></a>
+                                            @if($item->close == 0)
+                                                <a href="{{url('/close/contest')}}/{{$item->id}}" class="btn btn-danger btn-sm mb-1 mr-1 rounded">Close</a>
+                                            @else
+                                                <a href="{{url('/open/contest')}}/{{$item->id}}" class="btn btn-success btn-sm mb-1 mr-1 rounded">Open</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -73,7 +78,6 @@
                 <div class="modal-body">
                     <form id="productForm" name="productForm" class="form-horizontal">
                         <input type="hidden" name="contest_id" id="contest_id">
-
 
                         <div class="form-group">
                             <label for="phone" class="col-sm-12 control-label">Games</label>

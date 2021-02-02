@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2021 at 05:01 PM
+-- Generation Time: Feb 02, 2021 at 08:22 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -69,7 +69,8 @@ CREATE TABLE `contests` (
   `participants` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joining_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `room_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text CHARACTER SET utf8 DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `close` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -78,8 +79,8 @@ CREATE TABLE `contests` (
 -- Dumping data for table `contests`
 --
 
-INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `created_at`, `updated_at`) VALUES
-(1, 2, '212321312', 'Free Fire 100M', '2021-02-23', '12:00 AM', 1, '1100', '3002', '2500', '2000', '55', 'http://127.0.0.1:8000/contest/page', '12A', 'পাকিস্তানে এক নারীসহ চার টিকটকারকে গুলি করে হত্যা করা হয়েছে। আজ মঙ্গলবার ভোরে করাচির গার্ডেন এলাকায় আংক্লেসারিয়া', '2021-02-02 08:54:49', '2021-02-02 09:23:43');
+INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `close`, `created_at`, `updated_at`) VALUES
+(1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 1, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-02 12:53:29');
 
 -- --------------------------------------------------------
 
@@ -113,6 +114,8 @@ INSERT INTO `contest_ratings` (`id`, `contest_id`, `user_id`, `star`, `comments`
 CREATE TABLE `contest_subscriptions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `email` int(11) DEFAULT NULL,
+  `password` int(11) DEFAULT NULL,
   `contest_id` int(11) DEFAULT NULL,
   `date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -211,13 +214,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2020_12_22_171905_create_contest_winners_table', 2),
 (16, '2020_12_25_161321_create_test_models_table', 5),
 (20, '2020_12_26_143129_create_package_requests_table', 7),
-(24, '2020_12_21_190207_create_contest_subscriptions_table', 9),
 (28, '2021_01_11_064325_create_contest_ratings_table', 11),
 (30, '2021_01_11_173737_create_payments_table', 12),
 (31, '2020_12_26_122245_create_packages_table', 13),
 (32, '2020_12_23_172401_create_with_draws_table', 14),
 (33, '2020_12_23_184620_create_add_money_table', 15),
-(34, '2020_12_21_150845_create_contests_table', 16);
+(35, '2020_12_21_150845_create_contests_table', 16),
+(36, '2020_12_21_190207_create_contest_subscriptions_table', 17);
 
 -- --------------------------------------------------------
 
@@ -267,7 +270,7 @@ CREATE TABLE `package_requests` (
 --
 
 INSERT INTO `package_requests` (`id`, `pakage_id`, `user_id`, `amount`, `username_email_contact`, `password`, `status`, `created_at`, `updated_at`) VALUES
-(4, 2, 1, 500, 'asdasd', 'asdasdasd', '0', NULL, NULL);
+(4, 2, 1, 500, 'asdasd', 'asdasdasd', '1', NULL, '2021-02-02 13:06:10');
 
 -- --------------------------------------------------------
 
@@ -353,7 +356,10 @@ CREATE TABLE `users` (
   `profession` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `details` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` double DEFAULT NULL,
+  `winning_amount` double DEFAULT 0,
   `referral_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ban` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `ban_day` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -363,9 +369,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `image`, `department`, `semester`, `profession`, `details`, `amount`, `referral_code`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 139183, '123', NULL, '2020-12-22 10:54:01', '2021-01-13 13:14:39'),
-(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, -14764, '123', NULL, '2020-12-22 14:20:36', '2021-01-13 13:14:29');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `image`, `department`, `semester`, `profession`, `details`, `amount`, `winning_amount`, `referral_code`, `ban`, `ban_day`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 139183, 0, '123', '0', NULL, NULL, '2020-12-22 10:54:01', '2021-02-02 12:19:51'),
+(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, -14764, 0, '123', '0', NULL, NULL, '2020-12-22 14:20:36', '2021-02-02 12:09:41');
 
 -- --------------------------------------------------------
 
@@ -397,7 +403,7 @@ INSERT INTO `with_draws` (`id`, `user_id`, `phone`, `customer_number`, `payment_
 (3, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '0', '2021-01-13 10:00:31', NULL),
 (4, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '0', '2021-01-13 10:00:33', NULL),
 (5, 1, NULL, '9049493383', 'bkash', '1000', '18384736272', NULL, '2', '2021-01-13 10:00:37', '2021-01-13 10:33:25'),
-(6, 1, '01969005035', '9049493383', 'bkash', '1000', '18384736272', '12312123123', '1', '2021-01-13 10:01:04', '2021-01-13 10:32:50');
+(6, 1, '01969005035', '9049493383', 'bkash', '1000', '18384736272', '12312123123', '1', '2021-01-13 10:01:04', '2021-02-02 10:21:31');
 
 --
 -- Indexes for dumped tables
@@ -551,7 +557,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `packages`

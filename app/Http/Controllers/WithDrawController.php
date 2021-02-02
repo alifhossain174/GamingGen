@@ -61,7 +61,7 @@ class WithDrawController extends Controller
             'updated_at' => Carbon::now()
         ]);
         $data = WithDraw::where('id',$id)->first();
-        User::where('id',$user_id)->increment('amount',$data->amount);
+        User::where('id',$user_id)->increment('winning_amount',$data->amount);
         Toastr::warning('With Draw has been Denied', 'Denied');
         return back();
     }

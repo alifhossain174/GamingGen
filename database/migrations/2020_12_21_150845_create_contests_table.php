@@ -29,6 +29,7 @@ class CreateContestsTable extends Migration
             $table->string('joining_link')->nullable();
             $table->string('room_no')->nullable();
             $table->text('description')->nullable();
+            $table->text('close')->default(0);
             $table->timestamps();
         });
     }
