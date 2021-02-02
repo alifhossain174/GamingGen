@@ -52,6 +52,7 @@
 				<h5 class="sidenav-heading">MENU</h5>
 				<ul id="side-main-menu" class="side-menu list-unstyled">
 					<li><a href="{{url('/home')}}"> <i class="icon-home"></i>Home </a></li>
+					<li><a href="{{url('/users/list')}}"> <i class="fas fa-users"></i>All Users</a></li>
 					<li><a href="{{url('/slider/page')}}"> <i class="far fa-images"></i> Sliders </a></li>
 					<li><a href="{{url('/game/page')}}"> <i class="fas fa-gamepad"></i> Games </a></li>
 					<li><a href="{{url('/trend/page')}}"> <i class="fab fa-fantasy-flight-games"></i> Trends </a></li>

@@ -11,6 +11,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 
+    // users list
+    Route::get('/users/list','UserController@allUserList');
+
     // sliders
     Route::get('/slider/page','SliderController@sliderPage');
     Route::post('/add/new/slider','SliderController@addNewSlider');
@@ -54,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get/withdraw/data/for/modal/{id}/edit','WithDrawController@getDataForModalApproveWithDraw');
     Route::post('/save/approve/data/wihdraw','WithDrawController@saveTransactionId');
     Route::get('/deny/withdraw/{id}/{user_id}','WithDrawController@denyWithDraw');
+    Route::post('/update/wihdraw/data/by/modal','WithDrawController@updateWithdrawDataByModal');
 
     // add money
     Route::get('/add/money/page','AddMoneyController@addMoneyPage');

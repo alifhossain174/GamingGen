@@ -49,7 +49,9 @@
                                             @if($item->status == 0)
                                                 <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="Approve" class="edit btn btn-success btn-sm rounded editProduct">Approve</a>
                                                 <a href="{{url('/deny/withdraw')}}/{{$item->id}}/{{$item->user_id}}" class="btn btn-warning btn-sm rounded">Deny</a>
+
                                             @endif
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{$item->id}}" data-original-title="edit" class="edit btn btn-info btn-sm rounded editWithDraw"><i class="far fa-edit"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -128,6 +130,68 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="ajaxModel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modelHeading2"></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form id="productForm2" name="productForm" class="form-horizontal">
+                        <input type="hidden" name="product_id" id="product_id2">
+
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-12 control-label">Customer Number</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="customer_number2" name="customer_number" placeholder="Customer Number" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="payment_method" class="col-sm-12 control-label">Payment Method</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="payment_method2" name="payment_method" placeholder="Payment Method" value="" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amount" class="col-sm-12 control-label">Amount</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="amount2" name="amount" placeholder="Amount" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-12 control-label">Phone No</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="phone2" name="phone" placeholder="Phone" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="refference_no" class="col-sm-12 control-label">Refference No</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="refference_no2" name="refference_no" placeholder="Refference_no" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transaction_id" class="col-sm-12 control-label">Transaction ID</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="transaction_id2" name="transaction_id" placeholder="Transaction ID" value="">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
@@ -181,6 +245,54 @@
             });
 
         });
+
+
+        $(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('body').on('click', '.editWithDraw', function () {
+                var product_id = $(this).data('id');
+                $.get("{{ url('/get/withdraw/data/for/modal') }}" +'/' + product_id +'/edit', function (data) {
+                    // console.log(data.data.phone);
+                    $('#modelHeading2').html("Edit Withdraw");
+                    $('#saveBtn2').val("Update");
+                    $('#ajaxModel2').modal('show');
+                    $('#product_id2').val(data.data.id);
+                    $('#customer_number2').val(data.data.customer_number);
+                    $('#payment_method2').val(data.data.payment_method);
+                    $('#amount2').val(data.data.amount);
+                    $('#refference_no2').val(data.data.refference_no);
+                    $('#transaction_id2').val(data.data.transaction_id);
+                    $('#phone2').val(data.data.phone);
+                })
+            });
+
+            $('#saveBtn2').click(function (e) {
+                e.preventDefault();
+                $(this).html('Updating..');
+                $.ajax({
+                    data: $('#productForm2').serialize(),
+                    url: "{{ url('/update/wihdraw/data/by/modal') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#productForm2').trigger("reset");
+                        $('#ajaxModel2').modal('hide');
+                        location.reload(true);
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                        $('#saveBtn2').html('Save Changes');
+                    }
+                });
+            });
+
+            });
     </script>
 @endsection
 

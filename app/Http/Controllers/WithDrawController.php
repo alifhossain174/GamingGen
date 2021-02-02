@@ -65,4 +65,16 @@ class WithDrawController extends Controller
         Toastr::warning('With Draw has been Denied', 'Denied');
         return back();
     }
+
+    public function updateWithdrawDataByModal(Request $request){
+        WithDraw::where('id',$request->product_id)->update([
+            'phone' => $request->phone,
+            'customer_number' => $request->customer_number,
+            'amount' => $request->amount,
+            'refference_no' => $request->refference_no,
+            'transaction_id' => $request->transaction_id,
+            'updated_at' => Carbon::now(),
+        ]);
+        return response()->json(['success'=>'Data saved successfully.']);
+    }
 }
