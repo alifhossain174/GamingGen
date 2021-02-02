@@ -35,6 +35,10 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-4">
+
+                                </div>
+
                                 <div class="col-lg-12">
                                     <style>
                                         table.custom_table ,table.custom_table tr td{
@@ -59,18 +63,29 @@
                                         }
                                     </style>
 
-                                    <label>Users List</label>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>Per Kill Amount :</label>
+                                                <input type="text" name="per_kill_amount" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <label>Users List :</label>
                                     <table class="custom_table">
                                         <?php $sl=1;?>
                                         @foreach ($users as $item)
                                         <tr>
                                             <input type="hidden" name="user_id[]" value="{{$item->id}}">
                                             <td style="width: 5%"><?php echo $sl++; ?></td>
-                                            <td style="width: 15%;text-align:center">@if($item->image != null)<img src="{{url($item->image)}}" class="img-fluid" style="overflow:hidden;width:60px">@endif</td>
+                                            <td style="width: 10%;text-align:center">@if($item->image != null)<img src="{{url($item->image)}}" class="img-fluid" style="overflow:hidden;width:60px">@endif</td>
                                             <td style="width: 20%">{{$item->name}}</td>
                                             <td style="width: 20%">{{$item->email}}</td>
-                                            <td style="width: 20%">@if($item->phone != null){{$item->phone}}@endif</td>
-                                            <td style="width: 20%">
+                                            <td style="width: 15%">@if($item->phone != null){{$item->phone}}@endif</td>
+                                            <td style="width: 15%">
                                                 <select name="position[]" required>
                                                     <option value="0">Select One</option>
                                                     <option value="1">1st</option>
@@ -78,6 +93,7 @@
                                                     <option value="3">3rd</option>
                                                 </select>
                                             </td>
+                                            <td style="width: 15%"><input type="text" name="kill[]" placeholder="No. of Kills" style="width: 90%" value=""></td>
                                         </tr>
                                         @endforeach
                                     </table>
@@ -165,6 +181,7 @@
                                     <th scope="col">Game</th>
                                     <th scope="col">Winner</th>
                                     <th scope="col">Winner Image</th>
+                                    <th scope="col">Kill</th>
                                     <th scope="col">Position</th>
                                     <th scope="col">Prize</th>
                                     <th scope="col">Action</th>
@@ -179,6 +196,7 @@
                                         <td>{{$item->game_name}}</td>
                                         <td>{{$item->user_name}}</td>
                                         <td>@if($item->user_image != null)<img src="{{url($item->user_image)}}" style="width: 55px">@endif</td>
+                                        <td>{{$item->kill}}</td>
                                         <td>{{$item->position}}</td>
                                         <td>{{$item->winning_amount}}</td>
                                         <td>

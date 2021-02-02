@@ -72,13 +72,13 @@ class ContestWinnerController extends Controller
         foreach($request->user_id as $user_id){
             if($request->position[$i] > 0){
                 if($request->position[$i] == 1){
-                    $amount = $contest_info->first;
+                    $amount = $contest_info->first+($request->per_kill_amount*$request->kill[$i]);
                 }
                 if($request->position[$i] == 2){
-                    $amount = $contest_info->second;
+                    $amount = $contest_info->second+($request->per_kill_amount*$request->kill[$i]);
                 }
                 if($request->position[$i] == 3){
-                    $amount = $contest_info->third;
+                    $amount = $contest_info->third+($request->per_kill_amount*$request->kill[$i]);
                 }
 
                 ContestWinner::insert([
@@ -87,9 +87,10 @@ class ContestWinnerController extends Controller
                     'game_id' => $request->game_id,
                     'position' => $request->position[$i],
                     'winning_amount' => $amount,
+                    'kill' => $request->kill[$i],
                     'created_at' => Carbon::now()
                 ]);
-                User::where('id',$request->user_id)->increment('amount',$amount);
+                User::where('id',$request->user_id)->increment('winning_amount',$amount);
                 $i++;
             }
         }

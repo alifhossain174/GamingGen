@@ -20,6 +20,7 @@ class CreateContestWinnersTable extends Migration
             $table->integer('game_id')->nullable();
             $table->integer('position')->nullable();
             $table->integer('winning_amount')->nullable();
+            $table->integer('kill')->nullable();
             $table->timestamps();
         });
     }

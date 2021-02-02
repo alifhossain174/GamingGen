@@ -18,6 +18,7 @@ Route::group(['namespace'=>'Api'],function(){
     Route::post('get/contests','ApiController@getContests');
     Route::post('subscribe/contest','ApiController@subscribeContest');
     Route::post('winning/contest','ApiController@winningContestLists');
+    Route::post('winning/contest/by/contest','ApiController@winningContestListsByContest');
     Route::post('view/leaderboard','ApiController@viewLeaderBoard');
     Route::post('withdraw/amount','ApiController@withDrawAmount');
     Route::post('view/withdraw/amount/history','ApiController@withDrawAmountHistory');

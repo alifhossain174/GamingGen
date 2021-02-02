@@ -35,6 +35,7 @@
                                         <td>{{$item->game_name}}</td>
                                         <td>{{$item->user_name}}</td>
                                         <td>{{$item->email}}</td>
+                                        <td>{{$item->password}}</td>
                                         <td>{{$item->date}}</td>
                                         <td>{{$item->time}}</td>
                                         <td>{{$item->amount}}</td>
