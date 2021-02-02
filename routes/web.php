@@ -31,6 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
     // contest
     Route::get('/contest/page','ContestController@contestPage');
     Route::post('/add/new/contest','ContestController@addNewContest');
+    Route::get('view/all/contests','ContestController@viewAllContests');
+    Route::get('/get/contest/data/for/modal/{id}/edit','ContestController@getDataForModal');
+    Route::post('/update/contest/data/by/modal','ContestController@updateContestData');
     Route::get('/delete/contest/{id}','ContestController@deleteContest');
     Route::get('/manage/contest','ContestController@viewContestSubscribers');
     Route::get('/delete/contest/subscriber/{id}','ContestController@deleteContestSubscriber');
@@ -57,6 +60,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/delete/add/money/{id}','AddMoneyController@deleteAddMoney');
     Route::get('/approve/add/money/{id}/{user_id}','AddMoneyController@approveAddMoney');
     Route::get('/deny/add/money/{id}','AddMoneyController@denyAddMoney');
+    Route::get('/get/add/money/data/for/modal/{id}/edit','AddMoneyController@getDataForModal');
+    Route::post('/update/add/money/data/by/modal','AddMoneyController@updateAddMoneyByModal');
 
     // gen store
     Route::get('/package/page','PackageController@packagePage');

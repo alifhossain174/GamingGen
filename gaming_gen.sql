@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2021 at 08:16 PM
+-- Generation Time: Feb 02, 2021 at 05:01 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -41,6 +41,13 @@ CREATE TABLE `add_money` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `add_money`
+--
+
+INSERT INTO `add_money` (`id`, `user_id`, `phone`, `customer_number`, `payment_method`, `amount`, `refference_no`, `transaction_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, '0196900503555', '904949338355', 'bkash', '100055', '1838473627255', '1231231231555', '0', '2021-02-02 09:33:09', '2021-02-02 09:56:19');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +67,9 @@ CREATE TABLE `contests` (
   `second` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `third` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `participants` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `joining_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `room_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8 DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -68,8 +78,8 @@ CREATE TABLE `contests` (
 -- Dumping data for table `contests`
 --
 
-INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `created_at`, `updated_at`) VALUES
-(1, 1, '234234', 'qweqwe', '2021-01-08', '12:01 AM', 1, '100', '12312', '1231', '123123', '2', '2021-01-08 12:13:50', '2021-01-13 13:14:29');
+INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `created_at`, `updated_at`) VALUES
+(1, 2, '212321312', 'Free Fire 100M', '2021-02-23', '12:00 AM', 1, '1100', '3002', '2500', '2000', '55', 'http://127.0.0.1:8000/contest/page', '12A', 'পাকিস্তানে এক নারীসহ চার টিকটকারকে গুলি করে হত্যা করা হয়েছে। আজ মঙ্গলবার ভোরে করাচির গার্ডেন এলাকায় আংক্লেসারিয়া', '2021-02-02 08:54:49', '2021-02-02 09:23:43');
 
 -- --------------------------------------------------------
 
@@ -111,18 +121,6 @@ CREATE TABLE `contest_subscriptions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `contest_subscriptions`
---
-
-INSERT INTO `contest_subscriptions` (`id`, `user_id`, `contest_id`, `date`, `time`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(5, 1, 1, '2021-01-08', '12:01 AM', '100', '2', '2021-01-08 12:47:03', '2021-01-09 07:36:11'),
-(6, 1, 1, '2021-01-08', '12:01 AM', '100', '1', '2021-01-08 12:47:40', '2021-01-13 10:58:14'),
-(7, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:42', NULL),
-(8, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:45', NULL),
-(9, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:46', NULL),
-(10, 1, 1, '2021-01-08', '12:01 AM', '100', '0', '2021-01-08 12:47:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -213,13 +211,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2020_12_22_171905_create_contest_winners_table', 2),
 (16, '2020_12_25_161321_create_test_models_table', 5),
 (20, '2020_12_26_143129_create_package_requests_table', 7),
-(23, '2020_12_21_150845_create_contests_table', 8),
 (24, '2020_12_21_190207_create_contest_subscriptions_table', 9),
 (28, '2021_01_11_064325_create_contest_ratings_table', 11),
 (30, '2021_01_11_173737_create_payments_table', 12),
 (31, '2020_12_26_122245_create_packages_table', 13),
 (32, '2020_12_23_172401_create_with_draws_table', 14),
-(33, '2020_12_23_184620_create_add_money_table', 15);
+(33, '2020_12_23_184620_create_add_money_table', 15),
+(34, '2020_12_21_150845_create_contests_table', 16);
 
 -- --------------------------------------------------------
 
@@ -511,7 +509,7 @@ ALTER TABLE `with_draws`
 -- AUTO_INCREMENT for table `add_money`
 --
 ALTER TABLE `add_money`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contests`
@@ -529,7 +527,7 @@ ALTER TABLE `contest_ratings`
 -- AUTO_INCREMENT for table `contest_subscriptions`
 --
 ALTER TABLE `contest_subscriptions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contest_winners`
@@ -553,7 +551,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `packages`

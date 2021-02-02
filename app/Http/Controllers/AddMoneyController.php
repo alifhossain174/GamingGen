@@ -45,4 +45,30 @@ class AddMoneyController extends Controller
         Toastr::warning('Add Money has been Denied', 'Success');
         return back();
     }
+
+    public function getDataForModal($id){
+        $product = DB::table('add_money')
+                    ->join('users','users.id','=','add_money.user_id')
+                    ->select('add_money.*','users.name as user_name')
+                    ->where('add_money.id',$id)
+                    ->first();
+
+        // return response()->json([
+        //     'data' => $product
+        // ]);
+
+        return response()->json($product);
+    }
+
+    public function updateAddMoneyByModal(Request $request){
+        AddMoney::where('id',$request->add_money_id)->update([
+            'phone' => $request->phone,
+            'customer_number' => $request->customer_number,
+            'amount' => $request->amount,
+            'refference_no' => $request->refference_no,
+            'transaction_id' => $request->transaction_id,
+            'updated_at' => Carbon::now(),
+        ]);
+        return response()->json(['success'=>'Data saved successfully.']);
+    }
 }

@@ -26,6 +26,9 @@ class CreateContestsTable extends Migration
             $table->string('second')->nullable();
             $table->string('third')->nullable();
             $table->string('participants')->nullable();
+            $table->string('joining_link')->nullable();
+            $table->string('room_no')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

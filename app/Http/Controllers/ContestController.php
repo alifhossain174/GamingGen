@@ -14,15 +14,18 @@ use Illuminate\Http\Request;
 class ContestController extends Controller
 {
     public function contestPage(){
-        // $contests = Contest::orderBy('id','desc')->paginate(15);
+        $games = Game::all();
+        return view('backend.contest',compact('games'));
+    }
+
+    public function viewAllContests(){
         $contests = DB::table('contests')
                         ->join('games','games.id','=','contests.game_id')
                         ->select('contests.*','games.game_name')
                         ->orderBy('id','desc')
                         ->paginate(15);
 
-        $games = Game::all();
-        return view('backend.contest',compact('contests','games'));
+        return view('backend.view_contests',compact('contests'));
     }
 
     public function addNewContest(Request $request){
@@ -38,11 +41,56 @@ class ContestController extends Controller
             'second' => $request->second,
             'third' => $request->third,
             'participants' => $request->participants,
+            'joining_link' => $request->joining_link,
+            'room_no' => $request->room_no,
+            'description' => $request->description,
             'created_at' => Carbon::now()
         ]);
 
         Toastr::success('Contest has been Added', 'Success');
         return back();
+    }
+
+    public function getDataForModal($id){
+        $product = Contest::where('id',$id)->first();
+        $games = Game::all();
+
+        $select_options = "<select name='game_id' class='form-control' required><option value=''>Select Option</option>";
+            foreach($games as $item){
+                if($item->id == $product->game_id){
+                    $select_options .= "<option value='".$item->id."' selected>".$item->game_name."</option>";
+                }
+                else{
+                    $select_options .= "<option value='".$item->id."'>".$item->game_name."</option>";
+                }
+
+            }
+        $select_options .= "</select>";
+
+        return response()->json([
+            'data' => $product,
+            'select_options' => $select_options
+        ]);
+    }
+
+    public function updateContestData(Request $request){
+        Contest::where('id',$request->contest_id)->update([
+            'game_id' => $request->game_id,
+            'game_code' => $request->game_code,
+            'title' => $request->title,
+            'date' => $request->date,
+            'time' => $request->time,
+            'amount' => $request->amount,
+            'first' => $request->first,
+            'second' => $request->second,
+            'third' => $request->third,
+            'participants' => $request->participants,
+            'joining_link' => $request->joining_link,
+            'room_no' => $request->room_no,
+            'description' => $request->description,
+            'updated_at' => Carbon::now()
+        ]);
+        return response()->json(['success'=>'Data saved successfully.']);
     }
 
     public function deleteContest($id){

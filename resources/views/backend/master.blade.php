@@ -66,6 +66,7 @@
                         </a>
 						<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
 							<li><a href="{{url('/contest/page')}}">Add New Contest</a></li>
+							<li><a href="{{url('/view/all/contests')}}">View All Contest</a></li>
 							<li><a href="{{url('/manage/contest')}}">Approve/Deny <span class="text-warning">
                                 @if(DB::table('contest_subscriptions')->where('status',0)->count() > 0)
                                     ({{DB::table('contest_subscriptions')->where('status',0)->count()}})

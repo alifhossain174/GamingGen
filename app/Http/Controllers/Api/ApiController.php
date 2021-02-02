@@ -155,10 +155,10 @@ class ApiController extends Controller
                 if($status->status == 2){
                     $subscribed = 2;
                 }
-                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => $subscribed);
+                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'joining_link' => $list->joining_link, 'room_no' => $list->room_no, 'description' => $list->description, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => $subscribed);
             }
             else{
-                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => 0);
+                $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'joining_link' => $list->joining_link, 'room_no' => $list->room_no, 'description' => $list->description, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => 0);
             }
         }
         return response()->json([

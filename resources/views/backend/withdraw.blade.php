@@ -39,9 +39,9 @@
                                             @if($item->status == 0)
                                             Pending
                                             @elseif($item->status == 1)
-                                            Approved
+                                            <span class="text-success">Approved</span>
                                             @else
-                                            Denied
+                                            <span class="text-danger">Denied</span>
                                             @endif
                                         </td>
                                         <td>
