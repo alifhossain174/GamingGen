@@ -16,6 +16,7 @@ Route::group(['namespace'=>'Api'],function(){
     Route::get('get/games','ApiController@getGames');
     Route::get('get/trends','ApiController@getTrends');
     Route::post('get/contests','ApiController@getContests');
+    Route::post('get/previous/contests','ApiController@getPrevContests');
     Route::post('subscribe/contest','ApiController@subscribeContest');
     Route::post('winning/contest','ApiController@winningContestLists');
     Route::post('winning/contest/by/contest','ApiController@winningContestListsByContest');

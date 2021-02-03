@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/deny/contest/subscriber/{id}','ContestController@denyContestSubscriber');
     Route::get('/close/contest/{id}','ContestController@closeContest');
     Route::get('/open/contest/{id}','ContestController@openContest');
+    Route::get('/end/contest/{id}','ContestController@endContest');
 
     // contest winner
     Route::get('/contest/winner/page','ContestWinnerController@contestWinnerPage');

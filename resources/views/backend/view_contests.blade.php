@@ -54,6 +54,9 @@
                                             @else
                                                 <a href="{{url('/open/contest')}}/{{$item->id}}" class="btn btn-success btn-sm mb-1 mr-1 rounded">Open</a>
                                             @endif
+                                            @if($item->status == 1)
+                                                <a href="{{url('/end/contest')}}/{{$item->id}}" class="btn btn-info btn-sm mb-1 mr-1 rounded">End</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

@@ -150,4 +150,12 @@ class ContestController extends Controller
         Toastr::success('Contest has been Opened', 'Closed');
         return back();
     }
+
+    public function endContest($id){
+        Contest::where('id',$id)->update([
+            'status' => 0,
+        ]);
+        Toastr::error('Contest has been End', 'Closed');
+        return back();
+    }
 }

@@ -106,7 +106,7 @@ class ContestWinnerController extends Controller
     }
 
     public function findContest($game_id){
-        $contests = Contest::where('game_id',$game_id)->get();
+        $contests = Contest::where('game_id',$game_id)->where('status',1)->get();
         return response()->json($contests);
     }
 

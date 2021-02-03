@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2021 at 09:41 PM
+-- Generation Time: Feb 03, 2021 at 06:37 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -80,8 +80,8 @@ CREATE TABLE `contests` (
 --
 
 INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `close`, `created_at`, `updated_at`) VALUES
-(1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 1, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-02 14:00:08'),
-(2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-02 14:12:20');
+(1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 0, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-03 10:15:46'),
+(2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-03 10:27:52');
 
 -- --------------------------------------------------------
 
@@ -371,8 +371,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `image`, `department`, `semester`, `profession`, `details`, `amount`, `winning_amount`, `referral_code`, `ban`, `ban_day`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 1369163, 5050, '123', '0', NULL, NULL, '2020-12-22 10:54:01', '2021-02-02 14:12:20'),
-(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, -1374148, 0, '123', '0', NULL, NULL, '2020-12-22 14:20:36', '2021-02-02 14:12:17');
+(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 1367019, 8326, '123', '0', NULL, NULL, '2020-12-22 10:54:01', '2021-02-03 10:27:48'),
+(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, -1375280, 0, '123', '0', NULL, NULL, '2020-12-22 14:20:36', '2021-02-03 10:27:52');
 
 -- --------------------------------------------------------
 
@@ -540,7 +540,7 @@ ALTER TABLE `contest_subscriptions`
 -- AUTO_INCREMENT for table `contest_winners`
 --
 ALTER TABLE `contest_winners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -552,7 +552,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -588,7 +588,7 @@ ALTER TABLE `sliders`
 -- AUTO_INCREMENT for table `trends`
 --
 ALTER TABLE `trends`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

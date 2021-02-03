@@ -37,6 +37,7 @@ class ApiController extends Controller
             $phone=Auth::user()->phone;
             $referral_code = Auth::user()->referral_code;
             $amount = Auth::user()->amount;
+            $winning_amount = Auth::user()->winning_amount;
             $image = Auth::user()->image;
             $department = Auth::user()->department;
             $semester = Auth::user()->semester;
@@ -55,12 +56,12 @@ class ApiController extends Controller
                         'ban' => 0,
                         'ban_day' => Null
                     ]);
-                    $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester, 'profession' => $profession, 'details' => $details);
+                    $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'winning_amount' => $winning_amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester, 'profession' => $profession, 'details' => $details);
                     return response()->json(['success' =>true,'data'=>$data]);
                 }
             }
 
-            $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester, 'profession' => $profession, 'details' => $details);
+            $data=array('id'=>$id,'name'=>$name,'email'=>$email,'referral_code' => $referral_code, 'amount' => $amount, 'winning_amount' => $winning_amount, 'phone' => $phone, 'image' => $image, 'department' => $department, 'semester' => $semester, 'profession' => $profession, 'details' => $details);
             return response()->json(['success' =>true,'data'=>$data]);
         }
         else{
@@ -123,7 +124,7 @@ class ApiController extends Controller
     }
 
     public function getSliders(){
-        $data = Slider::all();
+        $data = Slider::orderBy('id','desc')->get();
         return response()->json([
             'success'=> true,
             'data'=> $data,
@@ -131,7 +132,7 @@ class ApiController extends Controller
     }
 
     public function getGames(){
-        $data = Game::all();
+        $data = Game::orderBy('id','desc')->get();
         return response()->json([
             'success'=> true,
             'data'=> $data,
@@ -142,6 +143,7 @@ class ApiController extends Controller
         $trends = DB::table('trends')
                     ->join('games','games.id','=','trends.game_id')
                     ->select('trends.*','games.game_name','games.package_name')
+                    ->orderBy('id','desc')
                     ->paginate(15);
 
         return response()->json([
@@ -151,7 +153,7 @@ class ApiController extends Controller
     }
 
     public function getContests(Request $request){
-        $lists = Contest::where('status',1)->where('game_id',$request->game_id)->get();
+        $lists = Contest::where('status',1)->where('game_id',$request->game_id)->orderBy('id','desc')->get();
         $data = array();
         foreach($lists as $list){
             $info = DB::table('contests')
@@ -178,6 +180,21 @@ class ApiController extends Controller
                 $data[] = array('id' => $info->id, 'game_id' => $list->game_id, 'game_code' => $list->game_code, 'close' => $list->close, 'joining_link' => $list->joining_link, 'room_no' => $list->room_no, 'description' => $list->description, 'package_name' => $info->package_name, 'title' => $info->title, 'date' => $info->date, 'time' => $info->time, 'status' => $info->status, 'amount' => $info->amount, 'first' => $list->first, 'second' => $list->second, 'third' => $list->third, 'subscribed' => 0);
             }
         }
+        return response()->json([
+            'success'=> true,
+            'data'=> $data,
+        ]);
+    }
+
+    public function getPrevContests(Request $request){
+        // $data = Contest::where('status',0)->where('game_id',$request->game_id)->orderBy('id','desc')->paginate(15);
+        $data = DB::table('contests')
+                        ->join('games','games.id','=','contests.game_id')
+                        ->select('contests.*','games.game_name','games.package_name')
+                        ->where('contests.game_id',$request->game_id)
+                        ->orderBy('contests.id','desc')
+                        ->paginate(15);
+
         return response()->json([
             'success'=> true,
             'data'=> $data,
@@ -234,7 +251,6 @@ class ApiController extends Controller
             ]);
         }
 
-
     }
 
     public function winningContestLists(Request $request){
@@ -244,7 +260,7 @@ class ApiController extends Controller
                         ->join('users','users.id','=','contest_winners.user_id')
                         ->select('contests.title as contest_name','games.game_name', 'games.logo', 'users.name as user_name','contest_winners.position','contest_winners.winning_amount','contest_winners.kill')
                         ->where('contest_winners.user_id',$request->user_id)
-                        ->orderBy('contest_winners.contest_id','desc')
+                        ->orderBy('contest_winners.id','desc')
                         ->paginate(15);
 
         return response()->json([
@@ -260,7 +276,7 @@ class ApiController extends Controller
                 ->join('users','users.id','=','contest_winners.user_id')
                 ->select('contests.title as contest_name','games.game_name', 'games.logo', 'users.name as user_name','contest_winners.position','contest_winners.winning_amount','contest_winners.kill')
                 ->where('contest_winners.contest_id',$request->contest_id)
-                ->orderBy('contest_winners.contest_id','desc')
+                ->orderBy('contest_winners.id','desc')
                 ->get();
 
         return response()->json([
@@ -307,7 +323,7 @@ class ApiController extends Controller
     }
 
     public function withDrawAmountHistory(Request $request){
-        $withdraw_history = WithDraw::where('user_id',$request->user_id)->get();
+        $withdraw_history = WithDraw::where('user_id',$request->user_id)->orderBy('id','desc')->get();
         return response()->json([
             'success'=> true,
             'data'=> $withdraw_history,
@@ -332,7 +348,7 @@ class ApiController extends Controller
     }
 
     public function addMoneyHistory(Request $request){
-        $add_money_history = AddMoney::where('user_id',$request->user_id)->get();
+        $add_money_history = AddMoney::where('user_id',$request->user_id)->orderBy('id','desc')->get();
         return response()->json([
             'success'=> true,
             'data'=> $add_money_history,
@@ -422,6 +438,7 @@ class ApiController extends Controller
                         ->select('packages.*','games.game_name')
                         ->where('game_id',$request->game_id)
                         ->where('status',1)
+                        ->orderBy('id','desc')
                         ->get();
 
         return response()->json([
@@ -465,6 +482,7 @@ class ApiController extends Controller
                     ->join('users','users.id','=','package_requests.user_id')
                     ->select('package_requests.*','packages.title as package_title','packages.diamond','users.name as user_name')
                     ->where('package_requests.user_id',$request->user_id)
+                    ->orderBy('id','desc')
                     ->get();
 
         return response()->json([
@@ -474,10 +492,14 @@ class ApiController extends Controller
     }
 
     public function userAmount(Request $request){
-        $data = User::where('id',$request->user_id)->first();
+        $data = array();
+        $info = User::where('id',$request->user_id)->first();
+        $data['amount'] = $info->amount;
+        $data['winning_amount'] = $info->winning_amount;
+
         return response()->json([
             'success'=> true,
-            'data'=> $data->amount,
+            'data'=> $data,
         ]);
     }
 
@@ -487,6 +509,7 @@ class ApiController extends Controller
                     ->join('games','games.id','=','contests.game_id')
                     ->select('contest_subscriptions.*','contests.title as contest_name','games.game_name','contests.game_code','contests.first','contests.second','contests.third')
                     ->where('contest_subscriptions.user_id',$request->user_id)
+                    ->orderBy('contest_subscriptions.id','desc')
                     ->get();
 
         return response()->json([
@@ -527,28 +550,28 @@ class ApiController extends Controller
 
     public function getPaymentInfo(Request $request){
         if($request->type == "bkash"){
-            $data = Payment::where('type','bkash')->get();
+            $data = Payment::where('type','bkash')->orderBy('id','desc')->get();
             return response()->json([
                 'success'=> true,
                 'data'=> $data,
             ]);
         }
         if($request->type == "rocket"){
-            $data = Payment::where('type','rocket')->get();
+            $data = Payment::where('type','rocket')->orderBy('id','desc')->get();
             return response()->json([
                 'success'=> true,
                 'data'=> $data,
             ]);
         }
         if($request->type == "nagad"){
-            $data = Payment::where('type','nagad')->get();
+            $data = Payment::where('type','nagad')->orderBy('id','desc')->get();
             return response()->json([
                 'success'=> true,
                 'data'=> $data,
             ]);
         }
         if($request->type == "all"){
-            $data = Payment::orderBy('type','desc')->get();
+            $data = Payment::orderBy('type','desc')->orderBy('id','desc')->get();
             return response()->json([
                 'success'=> true,
                 'data'=> $data,
