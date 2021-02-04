@@ -274,7 +274,7 @@ class ApiController extends Controller
                 ->join('contests','contests.id','=','contest_winners.contest_id')
                 ->join('games','games.id','=','contest_winners.game_id')
                 ->join('users','users.id','=','contest_winners.user_id')
-                ->select('contests.title as contest_name','games.game_name', 'games.logo', 'users.name as user_name','contest_winners.position','contest_winners.winning_amount','contest_winners.kill')
+                ->select('contests.title as contest_name','games.game_name', 'games.logo', 'users.name as user_name', 'users.image', 'contest_winners.position','contest_winners.winning_amount','contest_winners.kill')
                 ->where('contest_winners.contest_id',$request->contest_id)
                 ->orderBy('contest_winners.id','desc')
                 ->get();

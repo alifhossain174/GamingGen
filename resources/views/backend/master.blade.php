@@ -157,7 +157,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-sm-6">
-						<p>&copy; NGO Forum 2020</p>
+						<p>&copy; Gaming Gen 2021</p>
 					</div>
 				</div>
 			</div>

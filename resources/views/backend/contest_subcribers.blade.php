@@ -7,7 +7,26 @@
             <div class="col-lg-12">
                 <div class="card mt-3">
                     <div class="card-header text-white bg-success">
-                        <b>View All Contest Subscribers</b>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <b>View All Contest Subscribers</b>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                @php
+                                    $contests = App\Contest::all();
+                                @endphp
+                                <form action="{{url('/filter/by/contest')}}" method="POST">
+                                    @csrf
+                                    <select name="contest_id">
+                                        <option value="">Select One</option>
+                                        @foreach ($contests as $item)
+                                            <option value="{{$item->id}}">{{$item->title}}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="submit" value="Filter By Contest" class="btn btn-sm btn-info rounded">
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body" style="border-left: 1px solid #ADBC7A !important; border-bottom: 1px solid #ADBC7A !important;">
                         <table class="table table-striped" id="myTable">
