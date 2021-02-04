@@ -7,13 +7,25 @@
             <div class="col-lg-12">
                 <div class="card mt-3">
                     <div class="card-header text-white bg-success">
-                        <b>View All Withdraw Requests</b>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <b>View All Withdraw Requests</b>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <form action="{{url('/filter/by/date/withdraw')}}" method="POST">
+                                    @csrf
+                                    From : <input type="date" name="start_date"> To : <input type="date" name="end_date">
+                                    <input type="submit" value="Filter" class="btn btn-sm btn-info rounded">
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body" style="border-left: 1px solid #ADBC7A !important; border-bottom: 1px solid #ADBC7A !important;">
                         <table class="table table-striped" id="myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">SL</th>
+                                    <th scope="col">Date</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Phone</th>
                                     <th scope="col">Customer Phone</th>
@@ -29,6 +41,12 @@
                                 @foreach ($withdraws as $index => $item)
                                     <tr>
                                         <td>{{ $index+$withdraws->firstItem() }}</td>
+                                        <td>
+                                            @php
+                                                $newDate = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d M, Y');
+                                            @endphp
+                                            {{$newDate}}
+                                        </td>
                                         <td>{{$item->user_name}}</td>
                                         <td>{{$item->phone}}</td>
                                         <td>{{$item->customer_number}}</td>

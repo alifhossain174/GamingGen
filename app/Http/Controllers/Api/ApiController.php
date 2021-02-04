@@ -99,7 +99,7 @@ class ApiController extends Controller
         }
         else{
 
-            $data['amount'] = 0;
+            $data['amount'] = 100;
             if(User::where('referral_code',$data['referral_code'])->exists()){
                 $user_lists = User::where('referral_code',$data['referral_code'])->get();
                 foreach($user_lists as $item){
@@ -108,7 +108,7 @@ class ApiController extends Controller
                         'amount' => $info->amount+5
                     ]);
                 }
-                $data['amount'] = 5;
+                $data['amount'] = 105;
             }
 
 

@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/save/approve/data/wihdraw','WithDrawController@saveTransactionId');
     Route::get('/deny/withdraw/{id}/{user_id}','WithDrawController@denyWithDraw');
     Route::post('/update/wihdraw/data/by/modal','WithDrawController@updateWithdrawDataByModal');
+    Route::post('/filter/by/date/withdraw','WithDrawController@filterByDate');
 
     // add money
     Route::get('/add/money/page','AddMoneyController@addMoneyPage');
@@ -71,6 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/deny/add/money/{id}','AddMoneyController@denyAddMoney');
     Route::get('/get/add/money/data/for/modal/{id}/edit','AddMoneyController@getDataForModal');
     Route::post('/update/add/money/data/by/modal','AddMoneyController@updateAddMoneyByModal');
+    Route::post('/filter/by/date/add/money','AddMoneyController@filterByDate');
 
     // gen store
     Route::get('/package/page','PackageController@packagePage');

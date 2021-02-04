@@ -113,17 +113,29 @@ class ContestController extends Controller
 
     public function filterByContest(Request $request){
 
-        $contest_subscribers = DB::table('contest_subscriptions')
+        if($request->contest_id == 0){
+            $contest_subscribers = DB::table('contest_subscriptions')
                 ->join('contests','contests.id','=','contest_subscriptions.contest_id')
                 ->join('games','games.id','=','contests.game_id')
                 ->join('users','users.id','=','contest_subscriptions.user_id')
                 ->select('contest_subscriptions.*','contests.title as contest_title','users.name as user_name','games.game_name')
-                ->where('contests.id',$request->contest_id)
                 ->orderBy('contest_id','desc')
                 ->paginate(15);
 
-        return view('backend.contest_subcribers',compact('contest_subscribers'));
+            return view('backend.contest_subcribers',compact('contest_subscribers'));
+        }
+        else{
+            $contest_subscribers = DB::table('contest_subscriptions')
+                    ->join('contests','contests.id','=','contest_subscriptions.contest_id')
+                    ->join('games','games.id','=','contests.game_id')
+                    ->join('users','users.id','=','contest_subscriptions.user_id')
+                    ->select('contest_subscriptions.*','contests.title as contest_title','users.name as user_name','games.game_name')
+                    ->where('contests.id',$request->contest_id)
+                    ->orderBy('contest_id','desc')
+                    ->paginate(15);
 
+            return view('backend.contest_subcribers',compact('contest_subscribers'));
+        }
     }
 
     public function deleteContestSubscriber($id){

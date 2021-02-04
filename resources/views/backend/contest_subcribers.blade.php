@@ -18,7 +18,7 @@
                                 <form action="{{url('/filter/by/contest')}}" method="POST">
                                     @csrf
                                     <select name="contest_id">
-                                        <option value="">Select One</option>
+                                        <option value="0">View All</option>
                                         @foreach ($contests as $item)
                                             <option value="{{$item->id}}">{{$item->title}}</option>
                                         @endforeach

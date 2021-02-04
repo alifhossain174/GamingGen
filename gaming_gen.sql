@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2021 at 06:37 PM
+-- Generation Time: Feb 04, 2021 at 03:06 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -81,7 +81,8 @@ CREATE TABLE `contests` (
 
 INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `close`, `created_at`, `updated_at`) VALUES
 (1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 0, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-03 10:15:46'),
-(2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-03 10:27:52');
+(2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-03 10:27:52'),
+(3, 2, '12323', 'Test Contest 2', '2021-02-03', '12:22 AM', 1, '123', '123', '123', '123', '12', 'http://127.0.0.1:8000/contest/page', '12', 'asdasdsd', '0', '2021-02-03 11:59:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -522,7 +523,7 @@ ALTER TABLE `add_money`
 -- AUTO_INCREMENT for table `contests`
 --
 ALTER TABLE `contests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `contest_ratings`

@@ -71,4 +71,31 @@ class AddMoneyController extends Controller
         ]);
         return response()->json(['success'=>'Data saved successfully.']);
     }
+
+    public function filterByDate(Request $request){
+
+        $start_date = $request->start_date . " 00:00:00";
+        $end_date = $request->end_date . " 00:00:00";
+
+        if($request->start_date == '' || $request->end_date == ''){
+            $add_moneys = DB::table('add_money')
+                    ->join('users','users.id','=','add_money.user_id')
+                    ->select('add_money.*','users.name as user_name')
+                    ->orderBy('id','desc')
+                    ->paginate(15);
+
+            return view('backend.add_money',compact('add_moneys'));
+        }
+        else{
+            $add_moneys = DB::table('add_money')
+                    ->join('users','users.id','=','add_money.user_id')
+                    ->select('add_money.*','users.name as user_name')
+                    ->whereBetween('add_money.created_at', [$start_date, $end_date])
+                    ->orderBy('id','desc')
+                    ->paginate(15);
+
+            return view('backend.add_money',compact('add_moneys'));
+        }
+
+    }
 }

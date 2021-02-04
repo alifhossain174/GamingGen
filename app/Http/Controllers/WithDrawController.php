@@ -77,4 +77,29 @@ class WithDrawController extends Controller
         ]);
         return response()->json(['success'=>'Data saved successfully.']);
     }
+
+    public function filterByDate(Request $request){
+        $start_date = $request->start_date . " 00:00:00";
+        $end_date = $request->end_date . " 00:00:00";
+
+        if($request->start_date == '' || $request->end_date == ''){
+            $withdraws = DB::table('with_draws')
+                        ->join('users','users.id','=','with_draws.user_id')
+                        ->select('with_draws.*','users.name as user_name')
+                        ->orderBy('id','desc')
+                        ->paginate(15);
+
+            return view('backend.withdraw',compact('withdraws'));
+        }
+        else{
+            $withdraws = DB::table('with_draws')
+                        ->join('users','users.id','=','with_draws.user_id')
+                        ->select('with_draws.*','users.name as user_name')
+                        ->orderBy('id','desc')
+                        ->whereBetween('with_draws.created_at', [$start_date, $end_date])
+                        ->paginate(15);
+
+            return view('backend.withdraw',compact('withdraws'));
+        }
+    }
 }
