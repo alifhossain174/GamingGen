@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add/new/contest/winner','ContestWinnerController@addNewContestWinner');
     Route::get('/delete/contest/winner/{id}/{contest_id}','ContestWinnerController@deleteContestWinner');
     Route::get('/find/contest/{id}','ContestWinnerController@findContest');
+    Route::get('/find/contest/subscribers/{id}','ContestWinnerController@findContestSubscriberByContest');
 
     // withdraw amount
     Route::get('/withdraw/amount/page','WithDrawController@withDrawAmountPage');
