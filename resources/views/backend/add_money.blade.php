@@ -182,7 +182,6 @@
                     $('#amount').val(data.amount);
                     $('#refference_no').val(data.refference_no);
                     $('#transaction_id').val(data.transaction_id);
-
                 })
             });
 

@@ -80,7 +80,7 @@ class WithDrawController extends Controller
 
     public function filterByDate(Request $request){
         $start_date = $request->start_date . " 00:00:00";
-        $end_date = $request->end_date . " 00:00:00";
+        $end_date = $request->end_date . " 23:59:59";
 
         if($request->start_date == '' || $request->end_date == ''){
             $withdraws = DB::table('with_draws')
