@@ -50,6 +50,8 @@
 			<!-- Sidebar Navigation Menus-->
 			<div class="main-menu">
 				<h5 class="sidenav-heading">MENU</h5>
+
+                @if(Auth::user()->role == "admin")
 				<ul id="side-main-menu" class="side-menu list-unstyled">
 					<li><a href="{{url('/home')}}"> <i class="icon-home"></i>Home </a></li>
 					<li><a href="{{url('/users/list')}}"> <i class="fas fa-users"></i>All Users</a></li>
@@ -115,8 +117,10 @@
                     </li>
                     <li><a href="{{url('/contest/rating/page')}}"> <i class="fas fa-poll-h"></i> Contest Survey </a></li>
                     <li><a href="{{url('/payment/page')}}"> <i class="fas fa-money-check-alt"></i> Payment </a></li>
-
+                    <li><a href="{{url('/change/account/password')}}"> <i class="fas fa-key"></i> Password Change </a></li>
 				</ul>
+                @endif
+
 			</div>
 		</div>
 	</nav>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -21,5 +24,17 @@ class UserController extends Controller
         ]);
 
         return response()->json(['success'=>'Data saved successfully.']);
+    }
+
+    public function changePasswordPage(){
+        return view('backend.change_password');
+    }
+
+    public function changeMyPassword(Request $request){
+        User::where('id',Auth::user()->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+        Toastr::success('Password has changed', 'Success');
+        return redirect('/home');
     }
 }
