@@ -26,6 +26,33 @@ class ContestWinnerController extends Controller
         return view('backend.contest_winner',compact('contest_winner','games','users'));
     }
 
+    public function findContestSubscriberByContest($id){
+        $contest_subscribers = DB::table('contest_subscriptions')
+                                ->join('users','users.id','=','contest_subscriptions.user_id')
+                                ->select('contest_subscriptions.*','users.name','users.email','users.phone')
+                                ->where('contest_subscriptions.contest_id',$id)
+                                ->get();
+        $str = "<tr>";
+        if(count($contest_subscribers) > 0){
+            $sl = 1;
+            foreach($contest_subscribers as $item){
+                $str = "<input type='hidden' name='user_id[]' value='".$item->user_id."'>
+                        <td style='width: 5%'>".$sl++."</td>
+                        <td style='width: 20%'>".$item->name."</td>
+                        <td style='width: 20%'>".$item->email."</td>
+                        <td style='width: 15%'>".$item->phone."</td>
+                        <td style='width: 20%'><select name='position[]'><option value='0'>Select One</option><option value='1'>1st</option><option value='2'>2nd</option><option value='3'>3rd</option></select></td>
+                        <td style='width: 20%'><input type='text' name='kill[]' placeholder='No. of Kills' style='width: 90%' value=''></td>";
+            }
+        }
+        else{
+            $str = "<td>No Contest Subscriber Found</td>";
+        }
+        $str .= "</tr>";
+
+        return response()->json($str);
+    }
+
     public function searchCustomerForNewSale(Request $request){
         if($request->ajax()) {
 

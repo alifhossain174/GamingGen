@@ -119,9 +119,9 @@
 
             <div>
                 {{--  @if (Route::has('password.request'))  --}}
-                    <a class="txt1" href="{{ route('register') }}">
+                    {{-- <a class="txt1" href="{{ route('register') }}">
                         Sign Up Now
-                    </a>
+                    </a> --}}
                 {{--  @endif  --}}
             </div>
         </div>

@@ -75,27 +75,8 @@
                                     </div>
 
                                     <label>Users List :</label>
-                                    <table class="custom_table">
-                                        <?php $sl=1;?>
-                                        @foreach ($users as $item)
-                                        <tr>
-                                            <input type="hidden" name="user_id[]" value="{{$item->id}}">
-                                            <td style="width: 5%"><?php echo $sl++; ?></td>
-                                            <td style="width: 10%;text-align:center">@if($item->image != null)<img src="{{url($item->image)}}" class="img-fluid" style="overflow:hidden;width:60px">@endif</td>
-                                            <td style="width: 20%">{{$item->name}}</td>
-                                            <td style="width: 20%">{{$item->email}}</td>
-                                            <td style="width: 15%">@if($item->phone != null){{$item->phone}}@endif</td>
-                                            <td style="width: 15%">
-                                                <select name="position[]" required>
-                                                    <option value="0">Select One</option>
-                                                    <option value="1">1st</option>
-                                                    <option value="2">2nd</option>
-                                                    <option value="3">3rd</option>
-                                                </select>
-                                            </td>
-                                            <td style="width: 15%"><input type="text" name="kill[]" placeholder="No. of Kills" style="width: 90%" value=""></td>
-                                        </tr>
-                                        @endforeach
+                                    <table class="custom_table" id="myCustomtable">
+
                                     </table>
                                 </div>
 
@@ -112,60 +93,6 @@
         </div>
 
         <div class="row">
-            {{--  <div class="col-lg-3">
-                <div class="card mt-3">
-                    <div class="card-header bg-success text-white">
-                        <b>Add Contest Winner</b>
-                    </div>
-                    <div class="card-body" style="border-left: 1px solid #ADBC7A !important; border-bottom: 1px solid #ADBC7A !important;">
-                        <form action="{{url('/add/new/contest/winner')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Select Contest</label>
-                                        <select class="form-control" name="contest_id" required>
-                                            <option>Select One</option>
-                                            @foreach ($contests as $item)
-                                                <option value="{{$item->id}}">{{$item->title}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Winner Phone</label>
-                                        <input type="text" name="country" id="generic" class="form-control" placeholder="Search By Contact" required>
-                                        <div id="generic_list" style="position:relative;"></div>
-                                        <div id="generic_id"></div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Winning Position</label>
-                                        <select class="form-control" name="position" required>
-                                            <option>Select One</option>
-                                            <option value="1">1st</option>
-                                            <option value="2">2nd</option>
-                                            <option value="3">3rd</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 mt-3">
-                                    <div class="form-group">
-                                        <input type="submit" value="Set Winner" class="btn btn-success rounded">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>  --}}
 
             <div class="col-lg-12">
                 <div class="card mt-3">
@@ -244,6 +171,41 @@
             });
             }else{
             $('#contest_id').empty();
+            }
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#contest_id').on('change', function() {
+        var contest_id = $(this).val();
+            if(contest_id) {
+                $.ajax({
+                    url: '/find/contest/subscribers/'+contest_id,
+                    type: "GET",
+                    data : {"_token":"{{ csrf_token() }}"},
+                    dataType: "json",
+                    success:function(data) {
+                        // console.log(data);
+                        if(data){
+                            $("#myCustomtable").html(data);
+                            // $('#contest_id').empty();
+                            // $('#contest_id').focus;
+                            // $('#contest_id').append('<option value="">Select Contest</option>');
+                            // $.each(data, function(key, value){
+                            //     $('select[name="contest_id"]').append('<option value="'+ value.id +'">' + value.title+ '</option>');
+                            // });
+                        }
+                        else{
+                            $('#contest_id').empty();
+                        }
+                    }
+                });
+            }
+            else{
+                $('#contest_id').empty();
             }
         });
     });
