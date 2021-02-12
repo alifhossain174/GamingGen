@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2021 at 09:17 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.13
+-- Generation Time: Feb 12, 2021 at 06:44 PM
+-- Server version: 10.4.16-MariaDB
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -81,7 +81,7 @@ CREATE TABLE `contests` (
 
 INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `close`, `created_at`, `updated_at`) VALUES
 (1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 0, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-03 10:15:46'),
-(2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-08 22:26:23'),
+(2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-03 10:27:52'),
 (3, 2, '12323', 'Test Contest 2', '2021-02-03', '12:22 AM', 1, '123', '123', '123', '123', '12', 'http://127.0.0.1:8000/contest/page', '12', 'asdasdsd', '0', '2021-02-03 11:59:00', NULL);
 
 -- --------------------------------------------------------
@@ -132,7 +132,7 @@ CREATE TABLE `contest_subscriptions` (
 --
 
 INSERT INTO `contest_subscriptions` (`id`, `user_id`, `email`, `password`, `contest_id`, `date`, `time`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'alifhossain174@gmail.com', '12345678', 2, '2020-02-01', '12:20 AM', '1200', '1', NULL, '2021-02-02 13:48:36');
+(1, 1, 'alifhossain174@gmail.com', '12345678', 1, '2020-02-01', '12:20 AM', '1200', '1', NULL, '2021-02-02 13:48:36');
 
 -- --------------------------------------------------------
 
@@ -373,7 +373,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `role`, `image`, `department`, `semester`, `profession`, `details`, `amount`, `winning_amount`, `referral_code`, `ban`, `ban_day`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'admin', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 1363995, 11350, '123', '0', NULL, NULL, '2020-12-22 10:54:01', '2021-02-08 22:26:23'),
+(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'admin', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 1367019, 8326, '123', '0', NULL, NULL, '2020-12-22 10:54:01', '2021-02-03 10:27:48'),
 (2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, NULL, -1375280, 0, '123', '0', NULL, NULL, '2020-12-22 14:20:36', '2021-02-03 10:27:52');
 
 -- --------------------------------------------------------
@@ -542,7 +542,7 @@ ALTER TABLE `contest_subscriptions`
 -- AUTO_INCREMENT for table `contest_winners`
 --
 ALTER TABLE `contest_winners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
