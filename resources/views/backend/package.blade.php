@@ -90,6 +90,7 @@
                                         <td>{{$item->diamond}}</td>
                                         <td>@if($item->status == 1) Active @endif</td>
                                         <td>
+                                            <a href="{{url('/edit/package')}}/{{$item->id}}" class="btn btn-warning btn-sm rounded">Edit</a>
                                             <a href="{{url('/delete/package')}}/{{$item->id}}" class="btn btn-danger btn-sm rounded"><i class="far fa-trash-alt"></i></a>
                                         </td>
                                     </tr>

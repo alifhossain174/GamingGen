@@ -93,7 +93,7 @@ class TrendController extends Controller
             'game_id' => $request->game_id,
             'title' => $request->title,
             'description' => $request->description,
-            'created_at' => Carbon::now()
+            'updated_at' => Carbon::now()
         ]);
 
         Toastr::success('Trend has been Added', 'Success');

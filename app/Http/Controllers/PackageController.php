@@ -40,7 +40,7 @@ class PackageController extends Controller
             'image' => $image,
             'title' => $request->title,
             'amount' => $request->amount,
-            'amount' => $request->amount,
+            // 'amount' => $request->amount,
             'diamond' => $request->diamond,
             'game_id' => $request->game_id,
             'created_at' => Carbon::now()
@@ -101,5 +101,48 @@ class PackageController extends Controller
         ]);
         Toastr::success('Package Request has been Apprved', 'Denied');
         return back();
+    }
+
+    public function editPackage($id){
+        echo "hello";
+        $data = Package::where('id',$id)->first();
+        $games = Game::all();
+        return view('backend.edit_package',compact('data','games'));
+    }
+
+    public function updatePackage(Request $request){
+        $data = Package::where('id',$request->package_id)->first();
+
+        $image = null;
+
+        if ($request->hasFile('image')){
+
+            if($data->image != null){
+                if(file_exists(public_path($data->image))){
+                    unlink($data->image);
+                }
+            }
+
+            $get_image = $request->file('image');
+            $image_name = str::random(5) . time() . '.' . $get_image->getClientOriginalExtension();
+            Image::make($get_image)->save('package_images/' . $image_name, 50);
+            $image = "package_images/" . $image_name;
+
+            Package::where('id',$request->package_id)->update([
+                'image' => $image,
+            ]);
+        }
+
+
+        Package::where('id',$request->package_id)->update([
+            'title' => $request->title,
+            'amount' => $request->amount,
+            'diamond' => $request->diamond,
+            'game_id' => $request->game_id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        Toastr::success('Trend has been Added', 'Success');
+        return redirect('/package/page');
     }
 }

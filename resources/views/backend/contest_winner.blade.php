@@ -1,5 +1,10 @@
 @extends('backend.master')
 
+@section('header_css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+@endsection
+
 @section('content')
     <div class="container-fluid">
 
@@ -145,6 +150,20 @@
 
 
 @section('footer_js')
+<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+{{-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script> --}}
+
+<script>
+    $(document).ready( function () {
+        $('#myTable').dataTable( {
+            "pageLength": 15,
+        } );
+    } );
+</script>
+
+
 <script type="text/javascript">
     $(document).ready(function() {
     $('#game_id').on('change', function() {

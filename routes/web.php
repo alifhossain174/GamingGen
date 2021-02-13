@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
         // users list
         Route::get('/users/list','UserController@allUserList');
         Route::post('/make/user/banned','UserController@bannedUsers');
+        Route::get('unban/user/{id}','UserController@unbanUser');
 
         // sliders
         Route::get('/slider/page','SliderController@sliderPage');
@@ -81,6 +82,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/package/page','PackageController@packagePage');
         Route::post('/add/new/package','PackageController@addNewPackage');
         Route::get('/delete/package/{id}','PackageController@deletePackage');
+        Route::get('/edit/package/{id}','PackageController@editPackage');
+        Route::post('/update/package','PackageController@updatePackage');
         Route::get('/manage/package','PackageController@managePakcage');
         Route::get('/delete/package/request/{id}','PackageController@deletePackageRequest');
         Route::get('/deny/package/request/{id}','PackageController@denyPackageRequest');

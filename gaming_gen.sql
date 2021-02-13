@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2021 at 06:44 PM
+-- Generation Time: Feb 13, 2021 at 08:52 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -80,7 +80,7 @@ CREATE TABLE `contests` (
 --
 
 INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `close`, `created_at`, `updated_at`) VALUES
-(1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 0, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-03 10:15:46'),
+(1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 1, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-13 13:44:18'),
 (2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-03 10:27:52'),
 (3, 2, '12323', 'Test Contest 2', '2021-02-03', '12:22 AM', 1, '123', '123', '123', '123', '12', 'http://127.0.0.1:8000/contest/page', '12', 'asdasdsd', '0', '2021-02-03 11:59:00', NULL);
 
@@ -247,7 +247,7 @@ CREATE TABLE `packages` (
 --
 
 INSERT INTO `packages` (`id`, `image`, `game_id`, `title`, `amount`, `diamond`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'package_images/6vr5Y1610474400.png', 1, 'wqe', 2323, 23, 1, '2021-01-12 12:00:00', NULL);
+(2, 'package_images/fjYJB1613245112.png', 1, 'wqe', 2323, 25, 1, '2021-01-12 12:00:00', '2021-02-13 13:38:33');
 
 -- --------------------------------------------------------
 
@@ -339,6 +339,13 @@ CREATE TABLE `trends` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `trends`
+--
+
+INSERT INTO `trends` (`id`, `title`, `description`, `game_id`, `image`, `created_at`, `updated_at`) VALUES
+(3, 'Test', 'asdasd', 1, 'trend_images/8QA2R1613244486.png', '2021-02-13 13:28:07', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -373,8 +380,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `role`, `image`, `department`, `semester`, `profession`, `details`, `amount`, `winning_amount`, `referral_code`, `ban`, `ban_day`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'admin', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 1367019, 8326, '123', '0', NULL, NULL, '2020-12-22 10:54:01', '2021-02-03 10:27:48'),
-(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, NULL, -1375280, 0, '123', '0', NULL, NULL, '2020-12-22 14:20:36', '2021-02-03 10:27:52');
+(1, 'Fahim', 'alifhossain174@gmail.com', '01969005035', NULL, '$2y$10$Z6YpkpjEY2frWiK8jbQ6HOxkj/KElOejxi9VIYXk6SzADMMazJmfm', 'admin', 'profile_images/aU8Ni1608906639.jpg', 'CSE', '4', NULL, NULL, 1366796, 8549, '123', '0', NULL, NULL, '2020-12-22 10:54:01', '2021-02-13 13:44:18'),
+(2, 'Fahad', 'fahad@gmail.com', '01969005036', NULL, '$2y$10$WPpbKnptKIsRI9G3kAPS.u63V14tDOZtptpP8kWYZ9a2ihbWZGPta', NULL, NULL, NULL, NULL, NULL, NULL, -1375280, 0, '123', '0', NULL, NULL, '2020-12-22 14:20:36', '2021-02-13 13:51:38');
 
 -- --------------------------------------------------------
 
@@ -542,7 +549,7 @@ ALTER TABLE `contest_subscriptions`
 -- AUTO_INCREMENT for table `contest_winners`
 --
 ALTER TABLE `contest_winners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -590,7 +597,7 @@ ALTER TABLE `sliders`
 -- AUTO_INCREMENT for table `trends`
 --
 ALTER TABLE `trends`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

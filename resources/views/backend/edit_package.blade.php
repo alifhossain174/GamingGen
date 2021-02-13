@@ -7,12 +7,12 @@
             <div class="col-lg-6 m-auto">
                 <div class="card mt-3">
                     <div class="card-header bg-success text-white">
-                        <b>Edit Trend</b>
+                        <b>Edit Package</b>
                     </div>
                     <div class="card-body" style="border-left: 1px solid #ADBC7A !important; border-bottom: 1px solid #ADBC7A !important;">
-                        <form action="{{url('/update/trend')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{url('/update/package')}}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="trend_id" value="{{$data->id}}" readonly>
+                            <input type="hidden" name="package_id" value="{{$data->id}}" readonly>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -37,8 +37,14 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea name="description" class="form-control">{{$data->description}}</textarea>
+                                        <label>Amount</label>
+                                        <input type="text" name="amount" value="{{$data->amount}}" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Diamond</label>
+                                        <input type="text" name="diamond" value="{{$data->diamond}}" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -53,7 +59,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <input type="submit" value="Update Trend" class="btn btn-success rounded">
+                                        <input type="submit" value="Update Package" class="btn btn-success rounded">
                                     </div>
                                 </div>
                             </div>

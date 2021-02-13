@@ -46,7 +46,10 @@
                                     <td>{{$item->amount}}</td>
                                     <td>
                                         @if($item->ban != 1)
-                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-danger btn-sm rounded mt-1 editProduct"><i class="fas fa-times"></i></a>
+                                            <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-danger btn-sm rounded mt-1 editProduct"><i class="fas fa-times"></i></a>
+                                        @endif
+                                        @if($item->ban == 1)
+                                            <a href="{{url('unban/user')}}/{{$item->id}}" class="btn btn-sm btn-success rounded"><i class="fas fa-check"></i></a>
                                         @endif
                                     </td>
                                 </tr>

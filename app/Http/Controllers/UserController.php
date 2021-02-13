@@ -37,4 +37,13 @@ class UserController extends Controller
         Toastr::success('Password has changed', 'Success');
         return redirect('/home');
     }
+
+    public function unbanUser($id){
+        User::where('id',$id)->update([
+            'ban' => 0,
+            'ban_day' => null
+        ]);
+        Toastr::success('Unban User', 'Success');
+        return redirect('/users/list');
+    }
 }
