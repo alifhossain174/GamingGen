@@ -139,7 +139,7 @@ class ContestWinnerController extends Controller
 
     public function deleteContestWinner($id,$contest_id){
         $data = ContestWinner::where('id',$id)->first();
-        User::where('id',$data->user_id)->decrement('amount', $data->winning_amount);
+        User::where('id',$data->user_id)->decrement('winning_amount', $data->winning_amount);
         ContestWinner::where('id',$id)->delete();
         if(ContestWinner::where('contest_id',$contest_id)->count() < 3){
             Contest::where('id',$contest_id)->update([
