@@ -192,6 +192,7 @@ class ApiController extends Controller
                         ->join('games','games.id','=','contests.game_id')
                         ->select('contests.*','games.game_name','games.package_name')
                         ->where('contests.game_id',$request->game_id)
+                        ->where('status',0)
                         ->orderBy('contests.id','desc')
                         ->paginate(15);
 
