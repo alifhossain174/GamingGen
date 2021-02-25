@@ -216,25 +216,35 @@ class ApiController extends Controller
                     ]);
                 }
                 else{
-                    ContestSubscription::insert([
-                        'user_id' => $request->user_id,
-                        'email' => $request->email,
-                        'password' => $request->password,
-                        'contest_id' => $request->contest_id,
-                        'date' => $info->date,
-                        'time' => $info->time,
-                        'amount' => $info->amount,
-                        'created_at' => Carbon::now()
-                    ]);
-                    $remaining_amount = $user_info->amount - $info->amount;
-                    User::where('id',$request->user_id)->update([
-                        'amount' => $remaining_amount,
-                        'updated_at' => Carbon::now()
-                    ]);
-                    return response()->json([
-                        'success'=> true,
-                        'message'=> 'Successfully Subscribed'
-                    ]);
+
+                    if($user_info->ban == 1){
+                        return response()->json([
+                            'success'=> false,
+                            'message'=> 'User is Banned'
+                        ]);
+                    }
+                    else{
+                        ContestSubscription::insert([
+                            'user_id' => $request->user_id,
+                            'email' => $request->email,
+                            'password' => $request->password,
+                            'contest_id' => $request->contest_id,
+                            'date' => $info->date,
+                            'time' => $info->time,
+                            'amount' => $info->amount,
+                            'created_at' => Carbon::now()
+                        ]);
+                        $remaining_amount = $user_info->amount - $info->amount;
+                        User::where('id',$request->user_id)->update([
+                            'amount' => $remaining_amount,
+                            'updated_at' => Carbon::now()
+                        ]);
+                        return response()->json([
+                            'success'=> true,
+                            'message'=> 'Successfully Subscribed'
+                        ]);
+                    }
+
                 }
             }
             else{
@@ -305,20 +315,30 @@ class ApiController extends Controller
             ]);
         }
         else{
-            WithDraw::insert([
-                'user_id' => $request->user_id,
-                'phone' => $request->phone,
-                'customer_number' => $request->customer_number,
-                'payment_method' => $request->payment_method,
-                'amount' => $request->amount,
-                'refference_no' => $request->refference_no,
-                'created_at' => Carbon::now()
-            ]);
-            User::where('id',$request->user_id)->decrement('winning_amount',$request->amount);
-            return response()->json([
-                'success'=> true,
-                'message'=> 'Amount Withdraw request has been sent'
-            ]);
+
+            if($user_info->ban == 1){
+                return response()->json([
+                    'success'=> false,
+                    'message'=> 'User is Banned'
+                ]);
+            }
+            else{
+                WithDraw::insert([
+                    'user_id' => $request->user_id,
+                    'phone' => $request->phone,
+                    'customer_number' => $request->customer_number,
+                    'payment_method' => $request->payment_method,
+                    'amount' => $request->amount,
+                    'refference_no' => $request->refference_no,
+                    'created_at' => Carbon::now()
+                ]);
+                User::where('id',$request->user_id)->decrement('winning_amount',$request->amount);
+                return response()->json([
+                    'success'=> true,
+                    'message'=> 'Amount Withdraw request has been sent'
+                ]);
+            }
+
         }
     }
 
@@ -458,21 +478,27 @@ class ApiController extends Controller
             ]);
         }
         else{
-            User::where('id',$request->user_id)->decrement('amount',$package_info->amount);
-            PackageRequest::insert([
-                'pakage_id' => $request->pakage_id,
-                'user_id' => $request->user_id,
-                'amount' => $package_info->amount,
-                'username_email_contact' => $request->username_email_contact,
-                'password' => $request->password,
-            ]);
-            return response()->json([
-                'success'=> true,
-                'message'=> 'Sent Request Successfully'
-            ]);
+            if($user_info->ban == 1){
+                return response()->json([
+                    'success'=> false,
+                    'message'=> 'User is Banned'
+                ]);
+            }
+            else{
+                User::where('id',$request->user_id)->decrement('amount',$package_info->amount);
+                PackageRequest::insert([
+                    'pakage_id' => $request->pakage_id,
+                    'user_id' => $request->user_id,
+                    'amount' => $package_info->amount,
+                    'username_email_contact' => $request->username_email_contact,
+                    'password' => $request->password,
+                ]);
+                return response()->json([
+                    'success'=> true,
+                    'message'=> 'Sent Request Successfully'
+                ]);
+            }
         }
-
-
     }
 
     public function requestedPackageList(Request $request){
@@ -519,17 +545,27 @@ class ApiController extends Controller
     }
 
     public function submitContestRating(Request $request){
-        ContestRating::insert([
-            'contest_id' => $request->contest_id,
-            'user_id' => $request->user_id,
-            'star' => $request->star,
-            'comments' => $request->comments,
-            'created_at' => Carbon::now(),
-        ]);
-        return response()->json([
-            'success'=> true,
-            'message'=> 'Rating Submitted Successfully'
-        ]);
+        $user_info = User::where('id',$request->user_id)->first();
+        if($user_info->ban == 1){
+            return response()->json([
+                'success'=> false,
+                'message'=> 'User is Banned'
+            ]);
+        }
+        else{
+            ContestRating::insert([
+                'contest_id' => $request->contest_id,
+                'user_id' => $request->user_id,
+                'star' => $request->star,
+                'comments' => $request->comments,
+                'created_at' => Carbon::now(),
+            ]);
+            return response()->json([
+                'success'=> true,
+                'message'=> 'Rating Submitted Successfully'
+            ]);
+        }
+
     }
 
     public function getContestRatingList(Request $request){
