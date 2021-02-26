@@ -20,6 +20,7 @@ class CreatePackagesTable extends Migration
             $table->string('title')->nullable();
             $table->double('amount')->nullable();
             $table->double('diamond')->nullable();
+            $table->longText('description')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });

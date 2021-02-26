@@ -50,6 +50,12 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea name="description" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
                                         <input type="submit" value="Save Package" class="btn btn-success rounded">
                                     </div>
                                 </div>
