@@ -80,7 +80,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Diamond</th>
-                                    <th scope="col">Decsription</th>
+                                    {{-- <th scope="col">Decsription</th> --}}
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -95,7 +95,7 @@
                                         <td>{{$item->title}}</td>
                                         <td>{{$item->amount}}</td>
                                         <td>{{$item->diamond}}</td>
-                                        <td>{{$item->description}}</td>
+                                        {{-- <td>{{$item->description}}</td> --}}
                                         <td>@if($item->status == 1) Active @endif</td>
                                         <td>
                                             <a href="{{url('/edit/package')}}/{{$item->id}}" class="btn btn-warning btn-sm rounded">Edit</a>
