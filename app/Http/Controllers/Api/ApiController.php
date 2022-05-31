@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Bonus;
 use Image;
 use App\Slider;
 use App\Game;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Mail;
 
 class ApiController extends Controller
 {
@@ -73,7 +75,147 @@ class ApiController extends Controller
     }
 
 
-    public function userRegistration(Request $request){
+    // public function userRegistration(Request $request){
+
+    //   $data = array();
+    //     $data['email'] = $request->email;
+    //   $data['password'] = Hash::make($request->password);
+    //   $data['name'] = $request->name;
+    //     $data['referral_code'] = $request->referral_code;
+    //   $data['phone'] = $request->phone;
+    //     // json_encode($data['email']);
+         
+    //       return response()->json([
+    //              'success'=> false,
+    //              'data'=>  $data['name'],
+    //     ]);
+         
+    //      exit;
+
+    //  //   $email_check = User::where('email',$request->email)->first();
+    //   //  $phone_check = User::where('phone',$request->phone)->first();
+
+    //     // if($email_check){
+    //     //     return response()->json([
+    //     //         'success'=> false,
+    //     //         'message'=> 'Email already used. Please add another Email.'
+    //     //     ]);
+    //     // }
+    //     // elseif($phone_check){
+    //     //     return response()->json([
+    //     //         'success'=> false,
+    //     //         'message'=> 'Contact Number already used. Please add another Number.'
+    //     //     ]);
+    //     // }
+    //  //   else{
+
+    //          $amount = 0;
+    //             if(User::where('referral_code',$data['referral_code'])->exists()){
+    //                 $user_lists = User::where('referral_code',$data['referral_code'])->get();
+    //                 foreach($user_lists as $item){
+    //                     $info = User::where('id',$item->id)->first();
+    //                     User::where('id',$item->id)->update([
+    //                         'amount' => $info->amount+10
+    //                     ]);
+    //                 }
+    //                 $amount = 10;
+    //             }
+                
+    //           if($amount != NULL){
+                   
+    //               $amnt = $amount + 100;
+              
+        
+    //             return User::create([
+    //                 'name' => $data['name'],
+    //                 'email' => $data['email'],
+    //                 'referral_code' => str::random(5) . time(),
+    //                 'phone' => $data['phone'],
+    //                 'amount' => $amnt,
+    //                 'password' => Hash::make($data['password']),
+    //             ]);
+                
+    //               return response()->json([
+    //             'success'=> true,
+    //             'message'=> 'added Successfully.'
+    //               ]);
+    //           } else {
+                   
+                   
+    //                   $amnt = 100;
+                      
+    //             return User::create([
+    //                 'name' => $data['name'],
+    //                 'email' => $data['email'],
+    //                 'referral_code' => str::random(5) . time(),
+    //                 'phone' => $data['phone'],
+    //                 'amount' => $amnt,
+    //                 'password' => Hash::make($data['password']),
+    //             ]);
+    //              return response()->json([
+    //             'success'=> true,
+    //             'message'=> 'added Successfully.'
+    //         ]); 
+                   
+    //           }
+    //   //  }
+    // }
+    
+    
+public function userRegistration(Request $request){
+
+     $data = array();
+     $data['email'] = $request->email;
+     $data['password'] = Hash::make($request->password);
+     $data['name'] = $request->name;
+     $data['referral_code'] = $request->referral_code;
+     $data['phone'] = $request->phone;
+
+     $email_check = User::where('email',$request->email)->first();
+     $phone_check = User::where('phone',$request->phone)->first();
+
+     if($email_check){
+         return response()->json([
+             'success'=> false,
+             'message'=> 'Email already used. Please add another Email.'
+         ]);
+     }
+     elseif($phone_check){
+         return response()->json([
+             'success'=> false,
+             'message'=> 'Contact Number already used. Please add another Number.'
+         ]);
+     }
+     else{
+         $data['amount'] = 20;
+         if(User::where('referral_code',$data['referral_code'])->exists()){
+             $user_lists = User::where('referral_code',$data['referral_code'])->get();
+             foreach($user_lists as $item){
+                 $info = User::where('id',$item->id)->first();
+                 User::where('id',$item->id)->update([
+                     'amount' => $info->amount+5
+                 ]);
+             }
+             $data['amount'] = 25;
+         }
+
+
+         $data['referral_code'] = str::random(5) . time();
+
+         $id = DB::table('users')->insertGetId($data);
+         $user_details = DB::table('users')->select('id','name','email','referral_code','amount','phone','image','department','semester')->where('id',$id)->first();
+         return response()->json([
+             'success'=> true,
+             'data'=> $user_details,
+         ]);
+
+     }
+ }
+    
+
+    
+/*    
+      public function userRegistrationB(Request $request){
 
         $data = array();
         $data['email'] = $request->email;
@@ -81,6 +223,98 @@ class ApiController extends Controller
         $data['name'] = $request->name;
         $data['referral_code'] = $request->referral_code;
         $data['phone'] = $request->phone;
+        
+       // echo $request->email; exit;
+
+
+       // $email_check = User::where('email',$request->email)->exists();
+        //$phone_check = User::where('phone',$request->phone)->exists();
+        $bonuses = Bonus::all();
+    
+
+        if(User::where('email',$request->email)->exists()){
+            return response()->json([
+                'success'=> false,
+                'message'=> 'Email already used. Please add another Email.'
+            ]);
+        }
+        elseif(User::where('phone',$request->phone)->exists()){
+            return response()->json([
+                'success'=> false,
+                'message'=> 'Contact Number already used. Please add another Number.'
+            ]);
+        }
+        else{
+        $amount = 0;
+        if(User::where('referral_code',$data['referral_code'])->exists()){
+            $user_lists = User::where('referral_code',$data['referral_code'])->get();
+            
+        foreach($bonuses as $bonusesdata){
+   
+            $amount = $bonusesdata->ref_bonus;
+           
+      
+            foreach($user_lists as $item){
+                $info = User::where('id',$item->id)->first();
+                User::where('id',$item->id)->update([
+                   // 'amount' => $info->amount+10
+                        'amount' => $info->amount+$amount
+                ]);
+            }
+         }    
+            
+           // $amount = 10;
+        }
+        
+       if($amount != NULL){
+           
+        foreach($bonuses as $bonusesdata){
+   
+            $new_amount = $bonusesdata->ref_bonus;
+             $new_reg_amount = $bonusesdata->reg_bonus;
+           
+          $amnt = $new_amount + $new_reg_amount;
+      
+
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'referral_code' => str::random(5) . time(),
+            'phone' => $data['phone'],
+            'amount' => $amnt,
+            'password' => Hash::make($data['password']),
+        ]);
+        
+         return response()->json([
+               'success'=> true,
+                'message'=> 'added Successfully.'
+            ]); 
+        
+        }
+        
+        
+       } else {
+           
+           
+     foreach($bonuses as $bonusesdata){
+   
+            $reg_amount = $bonusesdata->reg_bonus;
+           
+              $regamnt = $reg_amount;
+
+
+        
+    }
+    }*/
+    
+    
+    
+      public function userRegistrationbyOtpForEmailAndPhone(Request $request){
+
+        $data = array();
+        $data['email'] = $request->email;
+        $data['phone'] = $request->phone;
+        $data['otp'] = $request->otp;
 
         $email_check = User::where('email',$request->email)->first();
         $phone_check = User::where('phone',$request->phone)->first();
@@ -88,40 +322,68 @@ class ApiController extends Controller
         if($email_check){
             return response()->json([
                 'success'=> false,
-                'message'=> 'Email already used. Please add another Email.'
+                'message'=> 'Email already used. Please add another Email.',
+             
+                
             ]);
         }
         elseif($phone_check){
             return response()->json([
                 'success'=> false,
-                'message'=> 'Contact Number already used. Please add another Number.'
+                'message'=> 'Contact Number already used. Please add another Number.',
+                 
             ]);
-        }
-        else{
+        }else{
+            
+$msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'] ;
 
-            $data['amount'] = 100;
-            if(User::where('referral_code',$data['referral_code'])->exists()){
-                $user_lists = User::where('referral_code',$data['referral_code'])->get();
-                foreach($user_lists as $item){
-                    $info = User::where('id',$item->id)->first();
-                    User::where('id',$item->id)->update([
-                        'amount' => $info->amount+5
-                    ]);
-                }
-                $data['amount'] = 105;
-            }
-
-
-            $data['referral_code'] = str::random(5) . time();
-
-            $id = DB::table('users')->insertGetId($data);
-            $user_details = DB::table('users')->select('id','name','email','referral_code','amount','phone','image','department','semester')->where('id',$id)->first();
-            return response()->json([
+ mail($request->email,"Shadin Gamers Revolution",$msg);
+              
+     
+                 return response()->json([
                 'success'=> true,
-                'data'=> $user_details,
+                'message'=> 'Please Check Your Email For Verification.',
+                'otp'=>  $data['otp'],
+                
             ]);
+            
         }
+   
     }
+    
+         public function userRegistrationbyOtpForEmail(Request $request){
+
+        $data = array();
+        $data['email'] = $request->email;
+        $data['otp'] = $request->otp;
+
+        // $email_check = User::where('email',$request->email)->first();
+
+        // if($email_check){
+        //     return response()->json([
+        //         'success'=> false,
+        //         'message'=> 'Email already used. Please add another Email.',
+             
+                
+        //     ]);
+        // }else{
+            
+$msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'] ;
+
+ mail($request->email,"Shadin Gamers Revolution",$msg);
+              
+     
+                 return response()->json([
+                'success'=> true,
+                'message'=> 'Please Check Your Email For Verification.',
+                'otp'=>  $data['otp'],
+                
+            ]);
+            
+        //}
+   
+    }
+
 
     public function getSliders(){
         $data = Slider::orderBy('id','desc')->get();
@@ -133,6 +395,18 @@ class ApiController extends Controller
 
     public function getGames(){
         $data = Game::orderBy('id','desc')->get();
+        return response()->json([
+            'success'=> true,
+            'data'=> $data,
+        ]);
+    }
+    
+    public function getLiveVideos(){
+     $data = DB::table('live_game')
+                    ->select('live_game.*')
+                    ->where('visibility',1)
+                    ->orderBy('id','desc')->paginate(15);
+
         return response()->json([
             'success'=> true,
             'data'=> $data,
@@ -150,6 +424,21 @@ class ApiController extends Controller
             'success'=> true,
             'data'=> $trends,
         ]);
+    }
+    
+    
+    public function getAppsInfo(){
+        $appsinfo=null;
+        $appsinfo = DB::table('apps_info')
+                    ->select('apps_info.*')
+                    ->first();
+                    
+                    return response()->json([
+                        'success'=> true,
+                        'data'=> $appsinfo,
+                    ]);
+                    
+       
     }
 
     public function getContests(Request $request){
@@ -192,6 +481,7 @@ class ApiController extends Controller
                         ->join('games','games.id','=','contests.game_id')
                         ->select('contests.*','games.game_name','games.package_name')
                         ->where('contests.game_id',$request->game_id)
+                        ->where('status',0)
                         ->orderBy('contests.id','desc')
                         ->paginate(15);
 
@@ -216,25 +506,38 @@ class ApiController extends Controller
                     ]);
                 }
                 else{
-                    ContestSubscription::insert([
-                        'user_id' => $request->user_id,
-                        'email' => $request->email,
-                        'password' => $request->password,
-                        'contest_id' => $request->contest_id,
-                        'date' => $info->date,
-                        'time' => $info->time,
-                        'amount' => $info->amount,
-                        'created_at' => Carbon::now()
-                    ]);
-                    $remaining_amount = $user_info->amount - $info->amount;
-                    User::where('id',$request->user_id)->update([
-                        'amount' => $remaining_amount,
-                        'updated_at' => Carbon::now()
-                    ]);
-                    return response()->json([
-                        'success'=> true,
-                        'message'=> 'Successfully Subscribed'
-                    ]);
+
+                    if($user_info->ban == 1){
+                        return response()->json([
+                            'success'=> false,
+                            'message'=> 'User is Banned'
+                        ]);
+                    }
+                    else{
+                        ContestSubscription::insert([
+                            'user_id' => $request->user_id,
+                              'ID_name' => $request->ID_name,
+                                'user_name' => $request->user_name,
+                                  'team_name' => $request->team_name,
+                            'email' => $request->email,
+                            'password' => $request->password,
+                            'contest_id' => $request->contest_id,
+                            'date' => $info->date,
+                            'time' => $info->time,
+                            'amount' => $info->amount,
+                            'created_at' => Carbon::now()
+                        ]);
+                        $remaining_amount = $user_info->amount - $info->amount;
+                        User::where('id',$request->user_id)->update([
+                            'amount' => $remaining_amount,
+                            'updated_at' => Carbon::now()
+                        ]);
+                        return response()->json([
+                            'success'=> true,
+                            'message'=> 'Successfully Subscribed'
+                        ]);
+                    }
+
                 }
             }
             else{
@@ -276,7 +579,8 @@ class ApiController extends Controller
                 ->join('users','users.id','=','contest_winners.user_id')
                 ->select('contests.title as contest_name','games.game_name', 'games.logo', 'users.name as user_name', 'users.image', 'contest_winners.position','contest_winners.winning_amount','contest_winners.kill')
                 ->where('contest_winners.contest_id',$request->contest_id)
-                ->orderBy('contest_winners.id','desc')
+             //   ->orderBy('contest_winners.id','desc')
+              ->orderBy('contest_winners.position','ASC')
                 ->get();
 
         return response()->json([
@@ -305,20 +609,30 @@ class ApiController extends Controller
             ]);
         }
         else{
-            WithDraw::insert([
-                'user_id' => $request->user_id,
-                'phone' => $request->phone,
-                'customer_number' => $request->customer_number,
-                'payment_method' => $request->payment_method,
-                'amount' => $request->amount,
-                'refference_no' => $request->refference_no,
-                'created_at' => Carbon::now()
-            ]);
-            User::where('id',$request->user_id)->decrement('winning_amount',$request->amount);
-            return response()->json([
-                'success'=> true,
-                'message'=> 'Amount Withdraw request has been sent'
-            ]);
+
+            if($user_info->ban == 1){
+                return response()->json([
+                    'success'=> false,
+                    'message'=> 'User is Banned'
+                ]);
+            }
+            else{
+                WithDraw::insert([
+                    'user_id' => $request->user_id,
+                    'phone' => $request->phone,
+                    'customer_number' => $request->customer_number,
+                    'payment_method' => $request->payment_method,
+                    'amount' => $request->amount,
+                    'refference_no' => $request->refference_no,
+                    'created_at' => Carbon::now()
+                ]);
+                User::where('id',$request->user_id)->decrement('winning_amount',$request->amount);
+                return response()->json([
+                    'success'=> true,
+                    'message'=> 'Amount Withdraw request has been sent'
+                ]);
+            }
+
         }
     }
 
@@ -404,32 +718,48 @@ class ApiController extends Controller
     }
 
     public function forgetPassword(Request $request){
-        $pass = str::random(5).time();
-        $msg = "Your password is: ".$pass;
-        $msg = wordwrap($msg,70);
+        
+        $data = array();
+        $data['email'] = $request->email;
 
-        try {
-            if(!mail($request->email,"Gaming Gen Password",$msg)) {
-                throw new customException($email);
+        $email_check = User::where('email',$request->email)->first();
+
+        if($email_check){
+            $pass = str::random(5).time();
+            $msg = "Your password is: ".$pass;
+            $msg = wordwrap($msg,70);
+    
+            try {
+                /*if(!mail($request->email,"Shadin Gamers Revolution Password",$msg)) {
+                    throw new customException($email);
+                }
+                else{*/
+                    mail($request->email,"Shadin Gamers Revolution Password",$msg);
+                    User::where('email',$request->email)->update([
+                        'password' => Hash::make($pass)
+                    ]);
+                    return response()->json([
+                        'success'=> true,
+                        'message'=> 'Password has been send to your mail'
+                    ]);
+               // }
             }
-            else{
-                mail($request->email,"Gaming Gen Password",$msg);
-                User::where('email',$request->email)->update([
-                    'password' => Hash::make($pass)
-                ]);
+    
+            catch (Exception $e) {
                 return response()->json([
-                    'success'=> true,
-                    'message'=> 'Password has been send to your mail'
+                    'success'=> false,
+                    'message'=> 'Invalid Email Address'
                 ]);
             }
-        }
-
-        catch (customException $e) {
+        }else{
             return response()->json([
                 'success'=> false,
-                'message'=> 'Error Occured'
+                'message'=> 'Account not found',
+             
+                
             ]);
         }
+
     }
 
     public function getPackages(Request $request){
@@ -440,6 +770,21 @@ class ApiController extends Controller
                         ->where('status',1)
                         ->orderBy('id','desc')
                         ->get();
+
+        return response()->json([
+            'success'=> true,
+            'data'=> $data,
+        ]);
+    }
+    
+    
+    public function getAllPackages(){
+        $data = DB::table('packages')
+                        ->join('games','games.id','=','packages.game_id')
+                        ->select('packages.*','games.game_name')
+                        ->where('status',1)
+                        ->orderBy('id','desc')
+                        ->paginate(15);
 
         return response()->json([
             'success'=> true,
@@ -458,21 +803,27 @@ class ApiController extends Controller
             ]);
         }
         else{
-            User::where('id',$request->user_id)->decrement('amount',$package_info->amount);
-            PackageRequest::insert([
-                'pakage_id' => $request->pakage_id,
-                'user_id' => $request->user_id,
-                'amount' => $package_info->amount,
-                'username_email_contact' => $request->username_email_contact,
-                'password' => $request->password,
-            ]);
-            return response()->json([
-                'success'=> true,
-                'message'=> 'Sent Request Successfully'
-            ]);
+            if($user_info->ban == 1){
+                return response()->json([
+                    'success'=> false,
+                    'message'=> 'User is Banned'
+                ]);
+            }
+            else{
+                User::where('id',$request->user_id)->decrement('amount',$package_info->amount);
+                PackageRequest::insert([
+                    'pakage_id' => $request->pakage_id,
+                    'user_id' => $request->user_id,
+                    'amount' => $package_info->amount,
+                    'username_email_contact' => $request->username_email_contact,
+                    'password' => $request->password,
+                ]);
+                return response()->json([
+                    'success'=> true,
+                    'message'=> 'Sent Request Successfully'
+                ]);
+            }
         }
-
-
     }
 
     public function requestedPackageList(Request $request){
@@ -519,17 +870,27 @@ class ApiController extends Controller
     }
 
     public function submitContestRating(Request $request){
-        ContestRating::insert([
-            'contest_id' => $request->contest_id,
-            'user_id' => $request->user_id,
-            'star' => $request->star,
-            'comments' => $request->comments,
-            'created_at' => Carbon::now(),
-        ]);
-        return response()->json([
-            'success'=> true,
-            'message'=> 'Rating Submitted Successfully'
-        ]);
+        $user_info = User::where('id',$request->user_id)->first();
+        if($user_info->ban == 1){
+            return response()->json([
+                'success'=> false,
+                'message'=> 'User is Banned'
+            ]);
+        }
+        else{
+            ContestRating::insert([
+                'contest_id' => $request->contest_id,
+                'user_id' => $request->user_id,
+                'star' => $request->star,
+                'comments' => $request->comments,
+                'created_at' => Carbon::now(),
+            ]);
+            return response()->json([
+                'success'=> true,
+                'message'=> 'Rating Submitted Successfully'
+            ]);
+        }
+
     }
 
     public function getContestRatingList(Request $request){
@@ -575,6 +936,51 @@ class ApiController extends Controller
             return response()->json([
                 'success'=> true,
                 'data'=> $data,
+            ]);
+        }
+    }
+    
+             public function newAmount(Request $request){
+        $user_info = User::where('id',$request->user_id)->first();
+        if($user_info->winning_amount <= $request->amount){
+            return response()->json([
+                'success'=> false,
+                'message'=> 'Sorry! Dont have enough winning amount'
+            ]);
+        }
+        else{
+
+            $winning = $user_info->winning_amount - $request->amount;
+            $amnt = $user_info->amount + $request->amount;
+            
+                    
+                $user = User::find($user_info->id);
+        
+                $user->name = $user_info->name;
+                $user->email = $user_info->email;
+                $user->phone = $user_info->phone;
+                $user->password =  $user_info->password;
+                $user->amount =$amnt;
+                $user->winning_amount = $winning;
+                 $user->created_at = Carbon::now();
+                 $user->save();
+          
+                //  User::insert([
+                //     'name' => $request->user_id,
+                //      'id' => $user_info->name,
+                //      'email' => $user_info->email,
+                //     'phone' => $user_info->phone,
+                //     'password' => $user_info->password,
+                //     'amount' => $amnt,
+                //     'winning_amount' => $winning,
+                //     'created_at' => Carbon::now()
+                // ]);
+
+              return response()->json([
+                'success'=> true,
+                'message'=> 'Amount Conversion Successfull!',
+                'amnt'=> $amnt,
+                'winning'=> $winning,
             ]);
         }
     }

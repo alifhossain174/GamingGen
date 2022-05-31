@@ -1,0 +1,1 @@
+[05-Apr-2021 09:47:28 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\UserController::changeMyPassword() in /home/gamizmuz/public_html/GamingGen/app/Http/Controllers/UserController.php on line 47

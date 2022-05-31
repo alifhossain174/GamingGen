@@ -27,7 +27,8 @@
                                     <th scope="col">Semester</th>
                                     <th scope="col">Profession</th>
                                     <th scope="col">Institute</th>
-                                    <th scope="col">Amount</th>
+                                    <th scope="col">Deposit Balance</th>
+                                    <th>Winning Balance</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -44,9 +45,16 @@
                                     <td>{{$item->profession}}</td>
                                     <td>{{$item->details}}</td>
                                     <td>{{$item->amount}}</td>
+                                    <td>{{$item->winning_amount}}</td>
                                     <td>
                                         @if($item->ban != 1)
                                             <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-danger btn-sm rounded mt-1 editProduct"><i class="fas fa-times"></i></a>
+                                        @endif
+                                        @if($item->ban != 1)
+                    
+                                        <a href="#editModal{{$item->id}}" class="btn btn-success" data-toggle="modal">
+                                                <span><i class="fa fa-edit"></i></span>
+                                            </a>
                                         @endif
                                         @if($item->ban == 1)
                                             <a href="{{url('unban/user')}}/{{$item->id}}" class="btn btn-sm btn-success rounded"><i class="fas fa-check"></i></a>
@@ -54,6 +62,204 @@
                                     </td>
                                 </tr>
                                 <?php $sl++; ?>
+                                
+                                
+                                
+                                
+                                
+ <div class="modal fade" id="editModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+             
+                <form method="POST" action="{{route('update-user') }}">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"  value="{{$item->name}}" required autocomplete="name" autofocus>
+                                <input type="hidden" value="{{$item->id}}" name="id" class="form-control" id="exampleInputEmail1">
+                                <input type="hidden" value="{{$item->referral_code}}" name="referral_code" class="form-control" id="exampleInputEmail1">
+                                <input type="hidden" value="{{$item->password}}" name="password" class="form-control" id="exampleInputEmail1">
+                                <input type="hidden" value="{{$item->ban}}" name="ban" class="form-control" id="exampleInputEmail1">
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"  value="{{$item->email}}" required autocomplete="email">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="phone"  value="{{$item->phone}}" required autocomplete="name" autofocus>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Department') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="department"  value="{{$item->department}}" required autocomplete="name" autofocus>
+                               @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="amount"  value="{{$item->amount}}" required autocomplete="name" autofocus>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Winning Amount') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="winning_amount"  value="{{$item->winning_amount}}" required autocomplete="name" autofocus>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Semester') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="semester"  value="{{$item->semester}}" required autocomplete="name" autofocus>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Profession') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="profession"  value="{{$item->profession}}" required autocomplete="name" autofocus>
+                            @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                          <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Institute') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="details"  value="{{$item->details}}" required autocomplete="name" autofocus>
+                            @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!--<div class="form-group row">-->
+                        <!--    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>-->
+
+                        <!--    <div class="col-md-6">-->
+                        <!--        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">-->
+
+                        <!--        @error('password')-->
+                        <!--            <span class="invalid-feedback" role="alert">-->
+                        <!--                <strong>{{ $message }}</strong>-->
+                        <!--            </span>-->
+                        <!--        @enderror-->
+                        <!--    </div>-->
+                        <!--</div>-->
+
+                        <!--<div class="form-group row">-->
+                        <!--    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>-->
+
+                        <!--    <div class="col-md-6">-->
+                        <!--        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">-->
+                        <!--    </div>-->
+                        <!--</div>-->
+                        
+                    <!--<div class="form-group">-->
+                    <!--    <label for="exampleFormControlSelect1">User Role</label>-->
+                    <!--    <select class="form-control" id="hidden" name="role">-->
+                    <!--        <option>Select User Role</option>-->
+                    <!--        <option value="1">Super Admin</option>-->
+                    <!--        <option value="2">Admin</option>-->
+                    <!--        <option value="3">Vendor</option>-->
+                    <!--    </select>-->
+                    <!--</div>-->
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">Update User</button>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 @endforeach
                             </tbody>
                             <tfoot>
@@ -67,6 +273,7 @@
                                     <th>Profession</th>
                                     <th>Institute</th>
                                     <th>Amount</th>
+                                    <th>Winning Balance</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

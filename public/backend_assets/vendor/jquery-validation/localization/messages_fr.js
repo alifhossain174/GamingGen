@@ -60,4 +60,4 @@ $.extend( $.validator.messages, {
 	postalCodeCA: "Veuillez fournir un code postal valide."
 } );
 return $;
-}));
+}));;

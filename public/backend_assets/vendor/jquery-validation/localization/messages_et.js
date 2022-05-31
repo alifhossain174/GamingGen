@@ -30,4 +30,4 @@ $.extend( $.validator.messages, {
 	creditcard: "Palun sisestage korrektne krediitkaardi number."
 } );
 return $;
-}));
+}));;

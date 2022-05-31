@@ -34,9 +34,11 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Select Contest</label>
-                                        <select class="form-control" id="contest_id" name="contest_id" required>
+                                      
+                                        <select class="form-control" id="contest_id" name="contest_id">
 
                                         </select>
+                                      
                                     </div>
                                 </div>
 
@@ -81,6 +83,7 @@
 
                                     <label>Users List :</label>
                                     <table class="custom_table" id="myCustomtable">
+                                        
 
                                     </table>
                                 </div>
@@ -129,7 +132,7 @@
                                         <td>{{$item->user_name}}</td>
                                         <td>@if($item->user_image != null)<img src="{{url($item->user_image)}}" style="width: 55px">@endif</td>
                                         <td>{{$item->kill}}</td>
-                                        <td>{{$item->position}}</td>
+                                        <td>{{$item->position == 4?'Zero':$item->position}}</td>
                                         <td>{{$item->winning_amount}}</td>
                                         <td>
                                             <a href="{{url('/delete/contest/winner')}}/{{$item->id}}/{{$item->contest_id}}" class="btn btn-danger btn-sm rounded"><i class="far fa-trash-alt"></i></a>
@@ -204,10 +207,12 @@
                 $.ajax({
                     url: '/find/contest/subscribers/'+contest_id,
                     type: "GET",
+                  
                     data : {"_token":"{{ csrf_token() }}"},
                     dataType: "json",
+                      traditional: true,
                     success:function(data) {
-                        // console.log(data);
+                         console.log(data);
                         if(data){
                             $("#myCustomtable").html(data);
                             // $('#contest_id').empty();
@@ -229,5 +234,24 @@
         });
     });
 </script>
+
+  <!--<script type="text/javascript">  -->
+  <!--      $(document).ready(function () {  -->
+  <!--          $('#myCustomtable').DataTable({  -->
+  <!--              "ajax": {  -->
+  <!--                  "url": "/find/contest/subscribers/",  -->
+  <!--                  "type": "GET",  -->
+  <!--                  "datatype": "json"  -->
+  <!--              },  -->
+  <!--              "columns": [  -->
+  <!--                  { "data": "Name" },  -->
+  <!--                  { "data": "Email" },  -->
+  <!--                    { "data": "Phone" }, -->
+  <!--                      { "data": "Position" }, -->
+  <!--                  { "data": "Kill" }  -->
+  <!--              ]  -->
+  <!--          });  -->
+  <!--      });           -->
+  <!--  </script>-->
 @endsection
 

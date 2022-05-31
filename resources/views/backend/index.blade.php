@@ -6,7 +6,7 @@
             <div class="col-lg-6">
                 <div class="card mt-4">
                     <div class="card-header bg-success text-white">
-                        Welcome to the Dashboard
+                        Welcome to SGR Dashboard
                     </div>
                     <div class="card-body" style="border-left: 1px solid #ADBC7A !important; border-bottom: 1px solid #ADBC7A !important;">
                         Hey {{Auth::user()->name}}, Enjoy the best experiance.<br><br>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\ContestWinner;
 use App\Contest;
+use App\ContestSubscription;
 use App\Game;
 use App\User;
 use Carbon\Carbon;
@@ -29,29 +30,110 @@ class ContestWinnerController extends Controller
     public function findContestSubscriberByContest($id){
         $contest_subscribers = DB::table('contest_subscriptions')
                                 ->join('users','users.id','=','contest_subscriptions.user_id')
-                                ->select('contest_subscriptions.*','users.name','users.email','users.phone')
-                                ->where('contest_subscriptions.contest_id',$id)
+                                ->select('contest_subscriptions.*','users.*','users.email','users.phone')
+                                ->where('contest_subscriptions.contest_id','=',$id)
                                 ->get();
-        $str = "<tr>";
+        $str[]  = "<tr>";
         if(count($contest_subscribers) > 0){
             $sl = 1;
             foreach($contest_subscribers as $item){
-                $str = "<input type='hidden' name='user_id[]' value='".$item->user_id."'>
-                        <td style='width: 5%'>".$sl++."</td>
-                        <td style='width: 20%'>".$item->name."</td>
-                        <td style='width: 20%'>".$item->email."</td>
-                        <td style='width: 15%'>".$item->phone."</td>
-                        <td style='width: 20%'><select name='position[]'><option value='0'>Select One</option><option value='1'>1st</option><option value='2'>2nd</option><option value='3'>3rd</option></select></td>
-                        <td style='width: 20%'><input type='text' name='kill[]' placeholder='No. of Kills' style='width: 90%' value=''></td>";
+                
+             
+                $str[] = "<input type='hidden' name='user_id[]' value='".$item->user_id."'>
+                        <td style='width: 5%'>".$sl++."</td>&nbsp; &nbsp;
+                        <td style='width: 20%'>".$item->name."</td>&nbsp; &nbsp;
+                        <td style='width: 20%'>".$item->email."</td>&nbsp; &nbsp;
+                        <td style='width: 15%'>".$item->phone."</td>&nbsp; &nbsp;
+                        <td style='width: 20%'><select name='position[]'><option value='0'>Select One</option><option value='1'>1st</option><option value='2'>2nd</option><option value='3'>3rd</option><option value='4'>Zero</option></select></td>&nbsp; &nbsp;
+                        <td style='width: 20%'><input style='width: 20%' type='text' name='kill[]' placeholder='No. of Kills' style='width: 90%' value=''></td> <br>";
             }
+           
         }
         else{
-            $str = "<td>No Contest Subscriber Found</td>";
+           $str[]  = "<td>No Contest Subscriber Found</td>";
         }
-        $str .= "</tr>";
+          
+        $str[]  .= "</tr>";
 
         return response()->json($str);
     }
+    
+    
+    //   public function findContestSubscriberByContest($id){
+     
+          
+    //               $contest_winner = DB::table('contest_winners')
+    //                         ->join('contests','contests.id','=','contest_winners.contest_id')
+    //                         ->join('games','games.id','=','contest_winners.game_id')
+    //                         ->join('users','users.id','=','contest_winners.user_id')
+    //                         ->select('contest_winners.*','contests.title','games.game_name','users.name as user_name','users.image as user_image')
+    //                         ->orderBy('contest_winners.contest_id','desc')
+    //                         ->paginate(15);
+                            
+                            
+          
+          
+    //         $id =  $request->contest_id;
+    //               $games = Game::all();
+    //     $contest_subscribers = ContestSubscription::where('contest_id', $id )->get();
+        
+    //     $users = User::all();
+        
+    //     $str = "<tr>";
+    //      $sl=1;
+    //     foreach($contest_subscribers as $contest_subscribersdata){
+    //           foreach($users as $usersdata){
+                   
+    //               if($usersdata->id == $contest_subscribersdata->user_id){
+    //                   echo $contest_subscribersdata->user_id; exit;
+    //             $str = "<input type='hidden' name='user_id[]' value='".$contest_subscribersdata->user_id."'>
+    //                     <td style='width: 5%'>".$sl++."</td>
+    //                     <td style='width: 20%'>".$usersdata->name."</td>
+    //                     <td style='width: 20%'>".$usersdata->email."</td>
+    //                     <td style='width: 15%'>".$usersdata->phone."</td>
+    //                     <td style='width: 20%'><select name='position[]'><option value='0'>Select One</option><option value='1'>1st</option><option value='2'>2nd</option><option value='3'>3rd</option><option value='4'>Zero</option></select></td>
+    //                     <td style='width: 20%'><input type='text' name='kill[]' placeholder='No. of Kills' style='width: 90%' value=''></td>";
+    //         } else{
+    //             $str = "<td>No Contest Subscriber Found</td>";
+    //           }
+    //      }
+    //     }
+        
+       
+    //     $str .= "</tr>";
+
+    //     return response()->json($str);
+    // }
+    
+    
+    
+    
+//       public function findContestSubscriberByContest(Request $request){
+          
+          
+          
+          
+//                   $contest_winner = DB::table('contest_winners')
+//                             ->join('contests','contests.id','=','contest_winners.contest_id')
+//                             ->join('games','games.id','=','contest_winners.game_id')
+//                             ->join('users','users.id','=','contest_winners.user_id')
+//                             ->select('contest_winners.*','contests.title','games.game_name','users.name as user_name','users.image as user_image')
+//                             ->orderBy('contest_winners.contest_id','desc')
+//                             ->paginate(15);
+                            
+                            
+          
+          
+//             $id =  $request->contest_id;
+//                   $games = Game::all();
+//         $contest_subscribers = ContestSubscription::where('contest_id', $id )->get();
+        
+//         $users = User::all();
+//       // echo json_encode($contest_subscribers); exit;
+//   return view('backend.contest_winnerss',compact('users','contest_subscribers','games','contest_winner'));
+//     }
+    
+    
 
     public function searchCustomerForNewSale(Request $request){
         if($request->ajax()) {
@@ -90,7 +172,9 @@ class ContestWinnerController extends Controller
     }
 
     public function addNewContestWinner(Request $request){
-
+        
+        
+//echo json_encode($request->user_id); exit;
         $contest_info = Contest::where('id',$request->contest_id)->first();
 
         $i = 0;
@@ -100,12 +184,23 @@ class ContestWinnerController extends Controller
             if($request->position[$i] > 0){
                 if($request->position[$i] == 1){
                     $amount = $contest_info->first+($request->per_kill_amount*$request->kill[$i]);
+                    
+            
                 }
                 if($request->position[$i] == 2){
                     $amount = $contest_info->second+($request->per_kill_amount*$request->kill[$i]);
+                    
+                 
                 }
                 if($request->position[$i] == 3){
                     $amount = $contest_info->third+($request->per_kill_amount*$request->kill[$i]);
+                    
+                 
+                }
+                if($request->position[$i] == 4){
+                    $amount = $request->per_kill_amount*$request->kill[$i];
+                    
+                 
                 }
 
                 ContestWinner::insert([
@@ -117,7 +212,23 @@ class ContestWinnerController extends Controller
                     'kill' => $request->kill[$i],
                     'created_at' => Carbon::now()
                 ]);
-                User::where('id',$request->user_id)->increment('winning_amount',$amount);
+                
+                
+           //  $winnng = User::all();
+             
+            //  $winnng = DB::table('users')
+            //         ->where('id',$user_id)
+            //         ->get();
+             
+               // echo $winnng->winning_amount; exit;
+               // $winn = $winnng->winning_amount +  $amount;
+              //  echo $winn; exit;
+                //   User::where('id',$user_id)->update([
+                    //  'winning_amount' => $winn,
+                     //  'updated_at' => Carbon::now()
+       // ]);
+                
+                User::where('id',$user_id)->increment('winning_amount',$amount);
                 $i++;
             }
         }
@@ -139,7 +250,7 @@ class ContestWinnerController extends Controller
 
     public function deleteContestWinner($id,$contest_id){
         $data = ContestWinner::where('id',$id)->first();
-        User::where('id',$data->user_id)->decrement('amount', $data->winning_amount);
+        User::where('id',$data->user_id)->decrement('winning_amount', $data->winning_amount);
         ContestWinner::where('id',$id)->delete();
         if(ContestWinner::where('contest_id',$contest_id)->count() < 3){
             Contest::where('id',$contest_id)->update([

@@ -1,11 +1,14 @@
 <?php
 use Illuminate\Support\Facades\Route;
-
+  Route::get('/get-api','MainController@getSliders');
+//   Route::post('/new-amount','MainController@newAmount');
 Route::get('/', function () {
     return redirect('/login');
 });
 
 Auth::routes();
+
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -17,6 +20,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users/list','UserController@allUserList');
         Route::post('/make/user/banned','UserController@bannedUsers');
         Route::get('unban/user/{id}','UserController@unbanUser');
+        Route::post('update/user','UserController@userUpdate')->name('update-user');
+
+        Route::get('/bonus','UserController@bonusIndex');
+        Route::post('update/bonus','UserController@userBonus')->name('update-bonus');
 
         // sliders
         Route::get('/slider/page','SliderController@sliderPage');
@@ -42,15 +49,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/get/contest/data/for/modal/{id}/edit','ContestController@getDataForModal');
         Route::post('/update/contest/data/by/modal','ContestController@updateContestData');
         Route::get('/delete/contest/{id}','ContestController@deleteContest');
-        Route::get('/manage/contest','ContestController@viewContestSubscribers');
-        Route::get('/delete/contest/subscriber/{id}','ContestController@deleteContestSubscriber');
+        Route::get('/manage/contest','ContestController@viewContestSubscribers')->name('manage-contest');
+       // Route::put('/delete/contest/subscriber/{id}','ContestController@deleteContestSubscriber');
+       Route::get('/delete/const/scbr/{id}','ContestController@deleteContestSubscriber');
         Route::get('/approve/contest/subscriber/{id}','ContestController@approveContestSubscriber');
         Route::get('/deny/contest/subscriber/{id}','ContestController@denyContestSubscriber');
         Route::get('/close/contest/{id}','ContestController@closeContest');
         Route::get('/open/contest/{id}','ContestController@openContest');
         Route::get('/end/contest/{id}','ContestController@endContest');
         Route::post('/filter/by/contest','ContestController@filterByContest');
-
+        Route::post('/filter/by/team','ContestController@filterByTeam');
         // contest winner
         Route::get('/contest/winner/page','ContestWinnerController@contestWinnerPage');
         Route::get('/search/customer/for/new/sale','ContestWinnerController@searchCustomerForNewSale');
@@ -59,6 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/contest/winner/{id}/{contest_id}','ContestWinnerController@deleteContestWinner');
         Route::get('/find/contest/{id}','ContestWinnerController@findContest');
         Route::get('/find/contest/subscribers/{id}','ContestWinnerController@findContestSubscriberByContest');
+        // Route::post('/contest/winner/page','ContestWinnerController@findContestSubscriberByContest');
 
         // withdraw amount
         Route::get('/withdraw/amount/page','WithDrawController@withDrawAmountPage');
@@ -68,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/deny/withdraw/{id}/{user_id}','WithDrawController@denyWithDraw');
         Route::post('/update/wihdraw/data/by/modal','WithDrawController@updateWithdrawDataByModal');
         Route::post('/filter/by/date/withdraw','WithDrawController@filterByDate');
+        //Filter by name
+        Route::post('/filter/by/name/withdraw','WithDrawController@filterByName');
 
         // add money
         Route::get('/add/money/page','AddMoneyController@addMoneyPage');
@@ -77,6 +88,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/get/add/money/data/for/modal/{id}/edit','AddMoneyController@getDataForModal');
         Route::post('/update/add/money/data/by/modal','AddMoneyController@updateAddMoneyByModal');
         Route::post('/filter/by/date/add/money','AddMoneyController@filterByDate');
+
+        //Filter by name
+        Route::post('/filter/by/name/add/money','AddMoneyController@filterByName');
 
         // gen store
         Route::get('/package/page','PackageController@packagePage');
@@ -101,6 +115,10 @@ Route::group(['middleware' => 'auth'], function () {
         //password change
         Route::get('change/account/password','UserController@changePasswordPage');
         Route::post('chnage/my/password','UserController@changeMyPassword');
+
+        //email change
+        Route::get('change/account/email','UserController@changeEmailPage');
+        Route::post('chnage/my/email','UserController@changeMyEmail');
     });
 
 });

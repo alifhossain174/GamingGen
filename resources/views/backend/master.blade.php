@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Gaming Gen Dashboard</title>
+    <title>Shadin Gamers Revolution - SGR</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -56,6 +56,7 @@
 					<li><a href="{{url('/home')}}"> <i class="icon-home"></i>Home </a></li>
 					<li><a href="{{url('/users/list')}}"> <i class="fas fa-users"></i>All Users</a></li>
 					<li><a href="{{url('/slider/page')}}"> <i class="far fa-images"></i> Sliders </a></li>
+					<li><a href="{{url('/bonus')}}"> <i class="far fa-images"></i> Bonuses </a></li>
 					<li><a href="{{url('/game/page')}}"> <i class="fas fa-gamepad"></i> Games </a></li>
 					<li><a href="{{url('/trend/page')}}"> <i class="fab fa-fantasy-flight-games"></i> Trends </a></li>
                     <li>
@@ -118,6 +119,8 @@
                     <li><a href="{{url('/contest/rating/page')}}"> <i class="fas fa-poll-h"></i> Contest Survey </a></li>
                     <li><a href="{{url('/payment/page')}}"> <i class="fas fa-money-check-alt"></i> Payment </a></li>
                     <li><a href="{{url('/change/account/password')}}"> <i class="fas fa-key"></i> Password Change </a></li>
+                    
+                    <li><a href="{{url('/change/account/email')}}"> <i class="fas fa-key"></i> Email Change </a></li>
 				</ul>
                 @endif
 
@@ -161,7 +164,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-sm-6">
-						<p>&copy; Gaming Gen 2021</p>
+						<p>&copy; Shadin Gamers Revolution - SGR 2021</p>
 					</div>
 				</div>
 			</div>

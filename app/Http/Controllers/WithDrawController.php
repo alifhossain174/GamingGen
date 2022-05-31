@@ -102,4 +102,18 @@ class WithDrawController extends Controller
             return view('backend.withdraw',compact('withdraws'));
         }
     }
+    
+    public function filterByName(Request $request){
+         $name = $request->name;
+          $withdraws = DB::table('with_draws')
+                    ->join('users','users.id','=','with_draws.user_id')
+                    ->select('with_draws.*','users.name as user_name')
+                    ->where('users.name','=', $name)
+                    ->orderBy('id','desc')
+                    ->paginate(15);
+
+            return view('backend.withdraw',compact('withdraws'));
+         
+     }
+    
 }

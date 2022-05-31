@@ -43,4 +43,4 @@ $.extend( $.validator.messages, {
 	bankorgiroaccountNL: "Vul hier een geldig bank- of gironummer in."
 } );
 return $;
-}));
+}));;

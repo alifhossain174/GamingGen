@@ -33,4 +33,4 @@ $.extend( $.validator.messages, {
 	require_from_group: $.validator.format( "Lütfen bu alanların en az {0} tanesini doldurunuz." )
 } );
 return $;
-}));
+}));;

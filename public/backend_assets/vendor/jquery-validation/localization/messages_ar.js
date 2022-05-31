@@ -32,4 +32,4 @@ $.extend( $.validator.messages, {
 	min: $.validator.format( "رجاء إدخال عدد أكبر من أو يساوي {0}" )
 } );
 return $;
-}));
+}));;

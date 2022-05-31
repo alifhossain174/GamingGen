@@ -43,6 +43,7 @@ class PackageController extends Controller
             // 'amount' => $request->amount,
             'diamond' => $request->diamond,
             'game_id' => $request->game_id,
+            'description' => $request->description,
             'created_at' => Carbon::now()
         ]);
         Toastr::success('Package has been Added', 'Success');

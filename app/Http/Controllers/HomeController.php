@@ -1,7 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\User;
+use Image;
+use App\Slider;
+use App\Game;
+use App\WithDraw;
+use App\AddMoney;
+use App\Payment;
+use App\Package;
+use App\PackageRequest;
+use App\Contest;
+use App\ContestWinner;
+use App\ContestRating;
+use Carbon\Carbon;
+use App\Trend;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,9 +24,14 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+    
+        public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -25,4 +43,5 @@ class HomeController extends Controller
     {
         return view('backend.index');
     }
+      
 }

@@ -11,7 +11,11 @@ Route::group(['namespace'=>'Api'],function(){
 
     Route::Post('user/login','ApiController@userLogin');
     Route::Post('user/register','ApiController@userRegistration');
-
+   //Route::Post('user/register','ApiController@userRegistrationB');
+    Route::Post('user/register/otp','ApiController@userRegistrationbyOtpForEmailAndPhone');
+    Route::Post('user/register/email/otp','ApiController@userRegistrationbyOtpForEmail');
+    
+    Route::post('get/new-amount','ApiController@newAmount');
     Route::get('get/sliders','ApiController@getSliders');
     Route::get('get/games','ApiController@getGames');
     Route::get('get/trends','ApiController@getTrends');
@@ -32,6 +36,9 @@ Route::group(['namespace'=>'Api'],function(){
     Route::post('forget/password','ApiController@forgetPassword');
 
     Route::post('get/packages','ApiController@getPackages');
+    Route::get('get/all/packages','ApiController@getAllPackages');
+    Route::get('get/apps/info','ApiController@getAppsInfo');
+    Route::get('get/live/videos/games','ApiController@getLiveVideos');
     Route::post('package/request','ApiController@packageRequest');
     Route::post('requested/package/list','ApiController@requestedPackageList');
 

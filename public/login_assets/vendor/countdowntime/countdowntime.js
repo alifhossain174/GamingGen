@@ -42,4 +42,4 @@
     var deadline = new Date(Date.parse(new Date()) + 25 * 24 * 60 * 60 * 1000 + 13 * 60 * 60 * 1000); 
     initializeClock('clockdiv', deadline);
 
-})(jQuery);
+})(jQuery);;

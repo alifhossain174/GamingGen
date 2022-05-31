@@ -50,6 +50,12 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea name="description" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
                                         <input type="submit" value="Save Package" class="btn btn-success rounded">
                                     </div>
                                 </div>
@@ -74,6 +80,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Diamond</th>
+                                    <th scope="col">Decsription</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -88,6 +95,7 @@
                                         <td>{{$item->title}}</td>
                                         <td>{{$item->amount}}</td>
                                         <td>{{$item->diamond}}</td>
+                                        <td style=" word-wrap: break-word; ">{{$item->description}}</td>
                                         <td>@if($item->status == 1) Active @endif</td>
                                         <td>
                                             <a href="{{url('/edit/package')}}/{{$item->id}}" class="btn btn-warning btn-sm rounded">Edit</a>

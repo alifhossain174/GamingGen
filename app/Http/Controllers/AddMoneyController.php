@@ -98,4 +98,17 @@ class AddMoneyController extends Controller
         }
 
     }
+    
+     public function filterByName(Request $request){
+         $name = $request->name;
+         $add_moneys = DB::table('add_money')
+                    ->join('users','users.id','=','add_money.user_id')
+                    ->select('add_money.*','users.name as user_name')
+                    ->where('users.name','=', $name)
+                    ->orderBy('id','desc')
+                    ->paginate(15);
+
+            return view('backend.add_money',compact('add_moneys'));
+         
+     }
 }

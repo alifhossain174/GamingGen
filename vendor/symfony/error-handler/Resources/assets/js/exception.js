@@ -277,3 +277,4 @@ Sfjs.addEventListener(document, 'DOMContentLoaded', function() {
 });
 
 /*]]>*/
+;

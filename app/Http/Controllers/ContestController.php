@@ -131,18 +131,52 @@ class ContestController extends Controller
                     ->join('users','users.id','=','contest_subscriptions.user_id')
                     ->select('contest_subscriptions.*','contests.title as contest_title','users.name as user_name','games.game_name')
                     ->where('contests.id',$request->contest_id)
-                    ->orderBy('contest_id','desc')
+                    ->orderBy('contest_id','asc')
+                    ->paginate(15);
+
+            return view('backend.contest_subcribers',compact('contest_subscribers'));
+        }
+    }
+    
+      public function filterByTeam(Request $request){
+          
+        // echo $request->team_name; exit;
+
+        if($request->team_name == 0){
+            $contest_subscribers = DB::table('contest_subscriptions')
+                ->join('contests','contests.id','=','contest_subscriptions.contest_id')
+                ->join('games','games.id','=','contests.game_id')
+                ->join('users','users.id','=','contest_subscriptions.user_id')
+                ->select('contest_subscriptions.*','contests.title as contest_title','users.name as user_name','games.game_name')
+                ->where('contest_subscriptions.team_name',$request->team_name)
+                ->paginate(15);
+
+            return view('backend.contest_subcribers',compact('contest_subscribers'));
+        }
+        else{
+            $contest_subscribers = DB::table('contest_subscriptions')
+                    ->join('contests','contests.id','=','contest_subscriptions.contest_id')
+                    ->join('games','games.id','=','contests.game_id')
+                    ->join('users','users.id','=','contest_subscriptions.user_id')
+                    ->select('contest_subscriptions.*','contests.title as contest_title','users.name as user_name','games.game_name')
+                    ->where('contest_subscriptions.team_name',$request->team_name)
                     ->paginate(15);
 
             return view('backend.contest_subcribers',compact('contest_subscribers'));
         }
     }
 
-    public function deleteContestSubscriber($id){
-        ContestSubscription::where('id',$id)->delete();
-        Toastr::error('Contest Subscriber has been Deleted', 'Deleted');
-        return back();
-    }
+    // public function deleteContestSubscriber($id){
+    //     ContestSubscription::where('id',$id)->delete();
+    //     Toastr::error('Contest Subscriber has been Deleted', 'Deleted');
+    //     return back();
+    // }
+        public function deleteContestSubscriber($id){
+                $abc = ContestSubscription::find($id);
+                $abc->delete();
+        
+                  return redirect()->route('manage-contest');
+            }
 
     public function approveContestSubscriber($id){
         ContestSubscription::where('id',$id)->update([
