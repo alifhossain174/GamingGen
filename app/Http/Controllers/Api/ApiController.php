@@ -84,12 +84,12 @@ class ApiController extends Controller
     //     $data['referral_code'] = $request->referral_code;
     //   $data['phone'] = $request->phone;
     //     // json_encode($data['email']);
-         
+
     //       return response()->json([
     //              'success'=> false,
     //              'data'=>  $data['name'],
     //     ]);
-         
+
     //      exit;
 
     //  //   $email_check = User::where('email',$request->email)->first();
@@ -120,12 +120,12 @@ class ApiController extends Controller
     //                 }
     //                 $amount = 10;
     //             }
-                
+
     //           if($amount != NULL){
-                   
+
     //               $amnt = $amount + 100;
-              
-        
+
+
     //             return User::create([
     //                 'name' => $data['name'],
     //                 'email' => $data['email'],
@@ -134,16 +134,16 @@ class ApiController extends Controller
     //                 'amount' => $amnt,
     //                 'password' => Hash::make($data['password']),
     //             ]);
-                
+
     //               return response()->json([
     //             'success'=> true,
     //             'message'=> 'added Successfully.'
     //               ]);
     //           } else {
-                   
-                   
+
+
     //                   $amnt = 100;
-                      
+
     //             return User::create([
     //                 'name' => $data['name'],
     //                 'email' => $data['email'],
@@ -155,13 +155,13 @@ class ApiController extends Controller
     //              return response()->json([
     //             'success'=> true,
     //             'message'=> 'added Successfully.'
-    //         ]); 
-                   
+    //         ]);
+
     //           }
     //   //  }
     // }
-    
-    
+
+
 public function userRegistration(Request $request){
 
      $data = array();
@@ -211,10 +211,10 @@ public function userRegistration(Request $request){
 
      }
  }
-    
 
-    
-/*    
+
+
+/*
       public function userRegistrationB(Request $request){
 
         $data = array();
@@ -223,14 +223,14 @@ public function userRegistration(Request $request){
         $data['name'] = $request->name;
         $data['referral_code'] = $request->referral_code;
         $data['phone'] = $request->phone;
-        
+
        // echo $request->email; exit;
 
 
        // $email_check = User::where('email',$request->email)->exists();
         //$phone_check = User::where('phone',$request->phone)->exists();
         $bonuses = Bonus::all();
-    
+
 
         if(User::where('email',$request->email)->exists()){
             return response()->json([
@@ -248,12 +248,12 @@ public function userRegistration(Request $request){
         $amount = 0;
         if(User::where('referral_code',$data['referral_code'])->exists()){
             $user_lists = User::where('referral_code',$data['referral_code'])->get();
-            
+
         foreach($bonuses as $bonusesdata){
-   
+
             $amount = $bonusesdata->ref_bonus;
-           
-      
+
+
             foreach($user_lists as $item){
                 $info = User::where('id',$item->id)->first();
                 User::where('id',$item->id)->update([
@@ -261,20 +261,20 @@ public function userRegistration(Request $request){
                         'amount' => $info->amount+$amount
                 ]);
             }
-         }    
-            
+         }
+
            // $amount = 10;
         }
-        
+
        if($amount != NULL){
-           
+
         foreach($bonuses as $bonusesdata){
-   
+
             $new_amount = $bonusesdata->ref_bonus;
              $new_reg_amount = $bonusesdata->reg_bonus;
-           
+
           $amnt = $new_amount + $new_reg_amount;
-      
+
 
         return User::create([
             'name' => $data['name'],
@@ -284,31 +284,31 @@ public function userRegistration(Request $request){
             'amount' => $amnt,
             'password' => Hash::make($data['password']),
         ]);
-        
+
          return response()->json([
                'success'=> true,
                 'message'=> 'added Successfully.'
-            ]); 
-        
+            ]);
+
         }
-        
-        
+
+
        } else {
-           
-           
+
+
      foreach($bonuses as $bonusesdata){
-   
+
             $reg_amount = $bonusesdata->reg_bonus;
-           
+
               $regamnt = $reg_amount;
 
 
-        
+
     }
     }*/
-    
-    
-    
+
+
+
       public function userRegistrationbyOtpForEmailAndPhone(Request $request){
 
         $data = array();
@@ -323,34 +323,34 @@ public function userRegistration(Request $request){
             return response()->json([
                 'success'=> false,
                 'message'=> 'Email already used. Please add another Email.',
-             
-                
+
+
             ]);
         }
         elseif($phone_check){
             return response()->json([
                 'success'=> false,
                 'message'=> 'Contact Number already used. Please add another Number.',
-                 
+
             ]);
         }else{
-            
+
 $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'] ;
 
  mail($request->email,"Shadin Gamers Revolution",$msg);
-              
-     
+
+
                  return response()->json([
                 'success'=> true,
                 'message'=> 'Please Check Your Email For Verification.',
                 'otp'=>  $data['otp'],
-                
+
             ]);
-            
+
         }
-   
+
     }
-    
+
          public function userRegistrationbyOtpForEmail(Request $request){
 
         $data = array();
@@ -363,25 +363,25 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
         //     return response()->json([
         //         'success'=> false,
         //         'message'=> 'Email already used. Please add another Email.',
-             
-                
+
+
         //     ]);
         // }else{
-            
+
 $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'] ;
 
  mail($request->email,"Shadin Gamers Revolution",$msg);
-              
-     
+
+
                  return response()->json([
                 'success'=> true,
                 'message'=> 'Please Check Your Email For Verification.',
                 'otp'=>  $data['otp'],
-                
+
             ]);
-            
+
         //}
-   
+
     }
 
 
@@ -400,7 +400,7 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
             'data'=> $data,
         ]);
     }
-    
+
     public function getLiveVideos(){
      $data = DB::table('live_game')
                     ->select('live_game.*')
@@ -425,20 +425,20 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
             'data'=> $trends,
         ]);
     }
-    
-    
+
+
     public function getAppsInfo(){
         $appsinfo=null;
         $appsinfo = DB::table('apps_info')
                     ->select('apps_info.*')
                     ->first();
-                    
+
                     return response()->json([
                         'success'=> true,
                         'data'=> $appsinfo,
                     ]);
-                    
-       
+
+
     }
 
     public function getContests(Request $request){
@@ -718,7 +718,7 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
     }
 
     public function forgetPassword(Request $request){
-        
+
         $data = array();
         $data['email'] = $request->email;
 
@@ -728,7 +728,7 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
             $pass = str::random(5).time();
             $msg = "Your password is: ".$pass;
             $msg = wordwrap($msg,70);
-    
+
             try {
                 /*if(!mail($request->email,"Shadin Gamers Revolution Password",$msg)) {
                     throw new customException($email);
@@ -744,7 +744,7 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
                     ]);
                // }
             }
-    
+
             catch (Exception $e) {
                 return response()->json([
                     'success'=> false,
@@ -755,8 +755,8 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
             return response()->json([
                 'success'=> false,
                 'message'=> 'Account not found',
-             
-                
+
+
             ]);
         }
 
@@ -776,8 +776,8 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
             'data'=> $data,
         ]);
     }
-    
-    
+
+
     public function getAllPackages(){
         $data = DB::table('packages')
                         ->join('games','games.id','=','packages.game_id')
@@ -939,7 +939,7 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
             ]);
         }
     }
-    
+
              public function newAmount(Request $request){
         $user_info = User::where('id',$request->user_id)->first();
         if($user_info->winning_amount <= $request->amount){
@@ -952,10 +952,10 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
 
             $winning = $user_info->winning_amount - $request->amount;
             $amnt = $user_info->amount + $request->amount;
-            
-                    
+
+
                 $user = User::find($user_info->id);
-        
+
                 $user->name = $user_info->name;
                 $user->email = $user_info->email;
                 $user->phone = $user_info->phone;
@@ -964,7 +964,7 @@ $msg =  "Your Shadin Gamers Revolution Account Verification Code: " .$data['otp'
                 $user->winning_amount = $winning;
                  $user->created_at = Carbon::now();
                  $user->save();
-          
+
                 //  User::insert([
                 //     'name' => $request->user_id,
                 //      'id' => $user_info->name,
