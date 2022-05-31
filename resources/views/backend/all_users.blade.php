@@ -51,8 +51,8 @@
                                             <a href="javascript:void(0)" data-toggle="tooltip"  data-id="{{$item->id}}" data-original-title="Edit" class="edit btn btn-danger btn-sm rounded mt-1 editProduct"><i class="fas fa-times"></i></a>
                                         @endif
                                         @if($item->ban != 1)
-                    
-                                        <a href="#editModal{{$item->id}}" class="btn btn-success" data-toggle="modal">
+
+                                        <a href="#editModal{{$item->id}}" class="btn btn-sm btn-success rounded" data-toggle="modal">
                                                 <span><i class="fa fa-edit"></i></span>
                                             </a>
                                         @endif
@@ -62,11 +62,11 @@
                                     </td>
                                 </tr>
                                 <?php $sl++; ?>
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
  <div class="modal fade" id="editModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -77,7 +77,7 @@
                 </button>
             </div>
             <div class="modal-body">
-             
+
                 <form method="POST" action="{{route('update-user') }}">
                         @csrf
 
@@ -112,7 +112,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
 
@@ -125,7 +125,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Department') }}</label>
 
@@ -138,7 +138,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}</label>
 
@@ -163,8 +163,8 @@
                                 @enderror
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Semester') }}</label>
 
@@ -177,7 +177,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Profession') }}</label>
 
@@ -190,7 +190,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                           <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Institute') }}</label>
 
@@ -225,7 +225,7 @@
                         <!--        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">-->
                         <!--    </div>-->
                         <!--</div>-->
-                        
+
                     <!--<div class="form-group">-->
                     <!--    <label for="exampleFormControlSelect1">User Role</label>-->
                     <!--    <select class="form-control" id="hidden" name="role">-->
@@ -249,17 +249,17 @@
         </div>
     </div>
 </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
+
+
+
+
+
+
                                 @endforeach
                             </tbody>
                             <tfoot>

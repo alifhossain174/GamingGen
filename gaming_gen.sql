@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.9
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 13, 2021 at 08:52 PM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Host: localhost:3306
+-- Generation Time: May 31, 2022 at 05:10 PM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -51,6 +52,18 @@ INSERT INTO `add_money` (`id`, `user_id`, `phone`, `customer_number`, `payment_m
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bonuses`
+--
+
+CREATE TABLE `bonuses` (
+  `id` int(11) NOT NULL,
+  `ref_bonus` varchar(255) DEFAULT NULL,
+  `reg_bonus` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contests`
 --
 
@@ -61,7 +74,7 @@ CREATE TABLE `contests` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `status` int(11) NOT NULL DEFAULT '1',
   `amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `first` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `second` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -69,8 +82,8 @@ CREATE TABLE `contests` (
   `participants` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joining_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `room_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `close` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `close` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -80,9 +93,7 @@ CREATE TABLE `contests` (
 --
 
 INSERT INTO `contests` (`id`, `game_id`, `game_code`, `title`, `date`, `time`, `status`, `amount`, `first`, `second`, `third`, `participants`, `joining_link`, `room_no`, `description`, `close`, `created_at`, `updated_at`) VALUES
-(1, 1, '23123', 'qweqw', '2021-02-03', '12:21 AM', 1, '12312', '123', '1231123', '1231231', '21', 'http://127.0.0.1:8000/contest/page', '123', 'asasdasdasdasasdas asdasd asdas das dasdasdasdasd asd as dasd asdasdasdas', '0', '2021-02-02 12:33:52', '2021-02-13 13:44:18'),
-(2, 2, '123123', 'Test Contest', '2021-02-03', '12:22 AM', 1, '200', '3000', '2000', '1000', '20', 'http://127.0.0.1:8000/contest/page', '12', 'http://127.0.0.1:8000/contest/page', '0', '2021-02-02 14:00:57', '2021-02-03 10:27:52'),
-(3, 2, '12323', 'Test Contest 2', '2021-02-03', '12:22 AM', 1, '123', '123', '123', '123', '12', 'http://127.0.0.1:8000/contest/page', '12', 'asdasdsd', '0', '2021-02-03 11:59:00', NULL);
+(1, 1, '123', 'qweq', '2022-05-31', '12:22 AM', 1, '12', '12', '23', '34', '12', '12', '12', 'assad', 0, '2022-05-31 11:02:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -95,7 +106,7 @@ CREATE TABLE `contest_ratings` (
   `contest_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `star` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `comments` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comments` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -116,6 +127,9 @@ INSERT INTO `contest_ratings` (`id`, `contest_id`, `user_id`, `star`, `comments`
 CREATE TABLE `contest_subscriptions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `team_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ID_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contest_id` int(11) DEFAULT NULL,
@@ -126,13 +140,6 @@ CREATE TABLE `contest_subscriptions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `contest_subscriptions`
---
-
-INSERT INTO `contest_subscriptions` (`id`, `user_id`, `email`, `password`, `contest_id`, `date`, `time`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'alifhossain174@gmail.com', '12345678', 1, '2020-02-01', '12:20 AM', '1200', '1', NULL, '2021-02-02 13:48:36');
 
 -- --------------------------------------------------------
 
@@ -164,7 +171,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -207,6 +214,7 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(0, '2020_12_21_150845_create_contests_table', 18),
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
@@ -220,7 +228,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (31, '2020_12_26_122245_create_packages_table', 13),
 (32, '2020_12_23_172401_create_with_draws_table', 14),
 (33, '2020_12_23_184620_create_add_money_table', 15),
-(35, '2020_12_21_150845_create_contests_table', 16),
 (38, '2020_12_21_190207_create_contest_subscriptions_table', 17),
 (39, '2020_12_22_171905_create_contest_winners_table', 17);
 
@@ -237,7 +244,8 @@ CREATE TABLE `packages` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` double DEFAULT NULL,
   `diamond` double DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `status` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -246,8 +254,8 @@ CREATE TABLE `packages` (
 -- Dumping data for table `packages`
 --
 
-INSERT INTO `packages` (`id`, `image`, `game_id`, `title`, `amount`, `diamond`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'package_images/fjYJB1613245112.png', 1, 'wqe', 2323, 25, 1, '2021-01-12 12:00:00', '2021-02-13 13:38:33');
+INSERT INTO `packages` (`id`, `image`, `game_id`, `title`, `amount`, `diamond`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(0, 'package_images/Uexaf1654015953.png', 1, 'asdasd', 231, 321, 'sdasd', 1, '2022-05-31 10:52:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -295,8 +303,8 @@ CREATE TABLE `password_resets` (
 CREATE TABLE `payments` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` text COLLATE utf8mb4_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -332,7 +340,7 @@ CREATE TABLE `sliders` (
 CREATE TABLE `trends` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
   `game_id` int(11) DEFAULT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -344,6 +352,7 @@ CREATE TABLE `trends` (
 --
 
 INSERT INTO `trends` (`id`, `title`, `description`, `game_id`, `image`, `created_at`, `updated_at`) VALUES
+(0, 'Test', 'asdsad', 1, 'trend_images/YTsWC1654016547.png', '2022-05-31 11:02:27', NULL),
 (3, 'Test', 'asdasd', 1, 'trend_images/8QA2R1613244486.png', '2021-02-13 13:28:07', NULL);
 
 -- --------------------------------------------------------
@@ -366,7 +375,7 @@ CREATE TABLE `users` (
   `profession` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `details` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` double DEFAULT NULL,
-  `winning_amount` double DEFAULT 0,
+  `winning_amount` double DEFAULT '0',
   `referral_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ban` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `ban_day` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -423,6 +432,12 @@ INSERT INTO `with_draws` (`id`, `user_id`, `phone`, `customer_number`, `payment_
 -- Indexes for table `add_money`
 --
 ALTER TABLE `add_money`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bonuses`
+--
+ALTER TABLE `bonuses`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -522,94 +537,16 @@ ALTER TABLE `with_draws`
 --
 
 --
--- AUTO_INCREMENT for table `add_money`
+-- AUTO_INCREMENT for table `bonuses`
 --
-ALTER TABLE `add_money`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `bonuses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contests`
 --
 ALTER TABLE `contests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `contest_ratings`
---
-ALTER TABLE `contest_ratings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `contest_subscriptions`
---
-ALTER TABLE `contest_subscriptions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `contest_winners`
---
-ALTER TABLE `contest_winners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `games`
---
-ALTER TABLE `games`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
---
--- AUTO_INCREMENT for table `packages`
---
-ALTER TABLE `packages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `package_requests`
---
-ALTER TABLE `package_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `payments`
---
-ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `sliders`
---
-ALTER TABLE `sliders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `trends`
---
-ALTER TABLE `trends`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `with_draws`
---
-ALTER TABLE `with_draws`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

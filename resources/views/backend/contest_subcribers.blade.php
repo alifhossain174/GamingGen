@@ -25,10 +25,10 @@
                                     </select>
                                     <input type="submit" value="Filter By Contest" class="btn btn-sm btn-info rounded">
                                 </form>
-                                
-                              
-                              
-                                
+
+
+
+
                                     <form action="{{url('/filter/by/team')}}" method="post">
                                     @csrf
                                     <select name="team_name">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="card-body" style="border-left: 1px solid #ADBC7A !important; border-bottom: 1px solid #ADBC7A !important;">
-                        <table class="table table-striped table-responsive-md" id="myTable">
+                        <table class="table table-striped table-responsive" id="myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">SL</th>
