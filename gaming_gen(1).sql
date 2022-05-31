@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 31, 2022 at 05:10 PM
+-- Generation Time: May 31, 2022 at 06:24 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -238,7 +238,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `packages` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `game_id` int(11) DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -255,7 +255,8 @@ CREATE TABLE `packages` (
 --
 
 INSERT INTO `packages` (`id`, `image`, `game_id`, `title`, `amount`, `diamond`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(0, 'package_images/Uexaf1654015953.png', 1, 'asdasd', 231, 321, 'sdasd', 1, '2022-05-31 10:52:33', NULL);
+(1, 'package_images/4dSkg1654021320.png', 1, '123121231', 123, 123, 'asdad', 1, '2022-05-31 12:22:00', NULL),
+(2, 'package_images/Uexaf1654015953.png', 1, 'asdasd', 231, 321, 'sdasd', 1, '2022-05-31 10:52:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -338,7 +339,7 @@ CREATE TABLE `sliders` (
 --
 
 CREATE TABLE `trends` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci,
   `game_id` int(11) DEFAULT NULL,
@@ -352,8 +353,10 @@ CREATE TABLE `trends` (
 --
 
 INSERT INTO `trends` (`id`, `title`, `description`, `game_id`, `image`, `created_at`, `updated_at`) VALUES
-(0, 'Test', 'asdsad', 1, 'trend_images/YTsWC1654016547.png', '2022-05-31 11:02:27', NULL),
-(3, 'Test', 'asdasd', 1, 'trend_images/8QA2R1613244486.png', '2021-02-13 13:28:07', NULL);
+(1, 'qwew', 'qweqwe', 1, 'trend_images/FEjFH1654021344.png', '2022-05-31 12:22:24', NULL),
+(2, 'Test', 'asdsad', 1, 'trend_images/YTsWC1654016547.png', '2022-05-31 11:02:27', NULL),
+(3, 'Test', 'asdasd', 1, 'trend_images/8QA2R1613244486.png', '2021-02-13 13:28:07', NULL),
+(4, 'asdasd', 'asdasd', 1, 'trend_images/NXmQj1654021406.png', '2022-05-31 12:23:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -547,6 +550,18 @@ ALTER TABLE `bonuses`
 --
 ALTER TABLE `contests`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `packages`
+--
+ALTER TABLE `packages`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `trends`
+--
+ALTER TABLE `trends`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
